@@ -47,12 +47,14 @@ const ico = {
 };
 
 // 엔진 머리글·전환·후처리 대신 쓰는 것 (u는 실제 초)
+const LOGO = new Image(); LOGO.src = 'assets/logo.png';
 function header(i, u) { const D = window.STORY, n = D.names.length;
-  txt([D.org, D.department].filter(Boolean).join('  ·  '), 48, 56, 15, SUB, 'left', 500); mono(`${pad(i + 1)} / ${pad(n)}`, W - 48, 56, 14, MUTE, 'right', 500);
+  txt([D.org, D.department].filter(Boolean).join('  ·  '), 48, 56, 15, SUB, 'left', 500); if (LOGO.complete && LOGO.naturalWidth) { box(W - 48 - 134, 24, 134, 46, '#fff', 8); c.drawImage(LOGO, W - 48 - 125, 31, 116, 116 * LOGO.naturalHeight / LOGO.naturalWidth) } else mono(`${pad(i + 1)} / ${pad(n)}`, W - 48, 56, 14, MUTE, 'right', 500);
   alpha(eout((u - .15) / .5), () => { mono(pad(i + 1), 48, 104, 16, SKY, 'left', 600); txt(D.names[i], 82, 105, 23, PAPER, 'left', 700) });
   line(48, 124, W - 48, 124, HAIR, 1, 'butt'); line(48, 124, 48 + (W - 96) * clamp(u / D.sceneSec), 124, SKY, 2, 'butt') }
 function wipe(i, u) { if (u > .55) return; const e = eio(u / .55); c.fillStyle = '#0d1422'; c.fillRect(W * e, 0, W * (1 - e) + 1, H); c.fillStyle = SKY; c.fillRect(W * e - 10, 0, 10, H) }
-function post() { const D = window.STORY; // 화면 아래 자막 (소리 없이도 내용이 전달되게)
+function post() { const D = window.STORY; // 화면 아래 자막 (소리 없이도 내용이 전달되게). 좁은 화면에서는 글자가 너무 작아져 페이지 쪽 자막을 쓴다
+  if (c.canvas.clientWidth && c.canvas.clientWidth < 600) return;
   c.fillStyle = grad(0, 590, 0, H, [[0, 'rgba(6,9,16,0)'], [.35, 'rgba(6,9,16,.86)'], [1, 'rgba(6,9,16,.96)']]); c.fillRect(0, 590, W, H - 590);
   const s = D.captions[curScene] || '', k = eout((curU - .25) / .5); if (!s || k <= 0) return;
   const size = 23, max = W - 140, words = s.split(' '), rows = ['']; c.font = `500 ${size}px "IBM Plex Sans KR","Malgun Gothic",sans-serif`;

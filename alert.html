@@ -1,17 +1,22 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>고농도 미세먼지 비상저감조치 · 모션그래픽</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>고농도 미세먼지 비상저감조치 | 수도권대기환경청</title>
+<meta name="theme-color" content="#0b0d14">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <meta name="description" content="고농도 초미세먼지가 예상될 때 시행하는 비상저감조치의 발령 기준과 조치 내용을 소개합니다">
 <style>
 :root{--page:#0b0d14;--card:#11141d;--raised:#181c27;--hair:rgba(238,241,244,.1);--text:#eef1f4;--sub:#a3acba;--mute:#7b8596;--accent:#6cc4ff;color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--page);color:var(--text);font-family:'IBM Plex Sans KR','Malgun Gothic',sans-serif;margin:0;word-break:keep-all}
 .wrap{max-width:1200px;margin:auto;padding:32px 24px 48px}
-header{margin-bottom:20px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.logo{display:block;flex:none;background:#fff;border-radius:6px;padding:4px 8px}.logo img{display:block;height:32px;width:auto}
 header p{margin:0;color:var(--sub);font-size:14px}
 h1{font-size:clamp(24px,3.4vw,32px);font-weight:500;margin:4px 0 0;line-height:1.3}
 .stage{border:1px solid var(--hair);border-radius:14px;overflow:hidden;margin:0;background:#0a0f1a}
 canvas{width:100%;aspect-ratio:5/3;display:block}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cap{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.stage:fullscreen{display:flex;align-items:center;justify-content:center;background:#000;border:0;border-radius:0}
+.stage:fullscreen canvas{width:min(100vw,166.667vh);height:auto}
+#fs[hidden]{display:none}
 .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
 button{font:inherit;font-size:14px;min-height:40px;border:1px solid var(--hair);background:var(--card);color:var(--text);border-radius:10px;cursor:pointer;padding:8px 16px;transition:background-color .15s cubic-bezier(.22,1,.36,1),border-color .15s cubic-bezier(.22,1,.36,1)}
 button:hover{background:var(--raised)}
@@ -23,21 +28,27 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--text);outline-offse
 #clock{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
 #steps{flex:1 0 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
 .step{text-align:left;position:relative;overflow:hidden;padding:8px 12px 12px;min-height:56px}
-.step small{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);margin-bottom:4px}
+.step small{display:block;font-size:12px;font-variant-numeric:tabular-nums;color:var(--mute);margin-bottom:4px}
 .step b{font-size:14px;font-weight:500}
 .step i{position:absolute;height:2px;background:var(--accent);bottom:0;left:0}
 .step[aria-current]{background:var(--raised);border-color:rgba(238,241,244,.22)}
 .note{font-size:13px;color:var(--mute);line-height:1.7;margin:16px 0 0}
 .note a{color:var(--sub)}
-@media(max-width:560px){.wrap{padding:16px 12px 32px}#steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.embed header,.embed .note{display:none}.embed .wrap{padding:0;max-width:none}.embed body{background:transparent;overflow:hidden}
+@media(max-width:640px){.wrap{padding:16px 12px 32px}h1{font-size:22px}.logo img{height:26px}#steps{grid-template-columns:repeat(2,minmax(0,1fr))}button{min-height:44px}
+  .cap{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;display:block;padding:12px 16px 14px;border-top:1px solid var(--hair);background:var(--card)}
+  .cap b{display:block;font-size:13px;font-weight:500;color:var(--accent);margin-bottom:2px}.cap p{margin:0;font-size:16px;line-height:1.6;min-height:3.2em}
+  .stage:fullscreen .cap{display:none}#clock{margin-left:0;flex:1 0 100%;order:9}}
+.embed header,.embed .note,.embed .controls a{display:none}.embed .wrap{padding:0;max-width:none}.embed body{background:transparent;overflow:hidden}
 </style><script>if(/[?&]embed=1/.test(location.search)){document.documentElement.classList.add("embed");addEventListener("load",()=>{const f=()=>parent.postMessage({pmMotionH:document.body.scrollHeight},"*");new ResizeObserver(f).observe(document.body);f()})}</script></head><body><main class="wrap">
-<header><p>미세먼지 계절관리제 · 제8차 (’26.12~’27.3)</p><h1>고농도 미세먼지 비상저감조치</h1></header>
-<figure class="stage"><canvas id="cv" role="img" aria-label="고농도 미세먼지 비상저감조치을 설명하는 모션그래픽. 화면 아래 자막으로 내용을 확인할 수 있습니다"></canvas><figcaption class="sr"><b id="capStep"></b><p id="capText" aria-live="polite"></p></figcaption></figure>
-<div class="controls"><button id="play" type="button">일시정지</button><button id="replay" type="button">처음부터</button><button id="voice" type="button" aria-pressed="false">소리 켜기</button><a href="alert-m.html">휴대폰으로 읽기</a><span id="clock"></span><div id="steps" aria-label="장면 선택"></div></div>
+<header><span class="logo"><img src="assets/logo.png" alt="기후에너지환경부 수도권대기환경청" width="102" height="32"></span><div><p>제8차 미세먼지 계절관리제</p><h1>고농도 미세먼지 비상저감조치</h1></div></header>
+<figure class="stage"><canvas id="cv" role="img" aria-label="고농도 미세먼지 비상저감조치을 설명하는 모션그래픽. 화면 아래 자막으로 내용을 확인할 수 있습니다"></canvas><figcaption class="cap"><b id="capStep"></b><p id="capText" aria-live="polite"></p></figcaption></figure>
+<div class="controls"><button id="play" type="button">일시정지</button><button id="replay" type="button">처음부터</button><button id="voice" type="button" aria-pressed="false">소리 켜기</button><button id="fs" type="button" hidden>전체 화면</button><a href="alert-m.html">휴대폰으로 읽기</a><span id="clock"></span><div id="steps" aria-label="장면 선택"></div></div>
 <p class="note">고농도 미세먼지 비상저감조치 기준 · 그림은 이해를 돕기 위한 개념도입니다 </p>
 </main>
-<script>window.STORY={"id":"alert","org":"미세먼지 계절관리제","department":"제8차 (’26.12~’27.3)","title":"고농도 미세먼지 비상저감조치","names":["비상저감조치","발령 기준","차량·사업장","공사장·도로","취약계층 보호"],"captions":["고농도 초미세먼지가 발생하거나 예상될 때 단기간에 배출을 줄이는 조치입니다","당일 평균 50㎍/㎥ 초과와 다음 날 50 초과 예보 등 세 가지 기준 중 하나에 해당하면 발령합니다","배출가스 5등급 차량 운행제한, 행정·공공기관 차량 2부제, 공공사업장 가동시간 단축을 시행합니다","공사장은 공사시간을 조정·변경하고, 도로 청소차는 1일 3회 이상 운영합니다","학교는 야외수업을 금지하고, 취약계층 이용시설에는 보건용 마스크를 지원합니다"],"accent":"#6cc4ff","sceneSec":5,"voice":[],"glyphs":"좋음보통나쁨매우·고농도초미세먼지비상저감조치발령단기간에배출을줄이는가준중하해당면과시평균예주의경일다날위㎍㎥차량스등급운행제한정공관부사업장전동축석탄약변로청소영회건강호취계층학교야외수금용설마크원력근무권실대질어코리아"};</script>
+<script>window.STORY={"id":"alert","org":"수도권대기환경청","department":"제8차 미세먼지 계절관리제","title":"고농도 미세먼지 비상저감조치","names":["비상저감조치","발령 기준","차량·사업장","공사장·도로","취약계층 보호"],"captions":["고농도 초미세먼지가 발생하거나 예상될 때 단기간에 배출을 줄이는 조치입니다","당일 평균 50㎍/㎥ 초과와 다음 날 50 초과 예보 등 세 가지 기준 중 하나에 해당하면 발령합니다","배출가스 5등급 차량 운행제한, 행정·공공기관 차량 2부제, 공공사업장 가동시간 단축을 시행합니다","공사장은 공사시간을 조정·변경하고, 도로 청소차는 1일 3회 이상 운영합니다","학교는 야외수업을 금지하고, 취약계층 이용시설에는 보건용 마스크를 지원합니다"],"accent":"#6cc4ff","sceneSec":5,"voice":[],"glyphs":"좋음보통나쁨매우·고농도초미세먼지비상저감조치발령단기간에배출을줄이는가준중하해당면과시평균예주의경일다날위㎍㎥차량스등급운행제한정공관부사업장전동축석탄약변로청소영회건강호취계층학교야외수금용설마크원력근무권실대질어코리아"};
+(()=>{const st=document.querySelector(".stage"),b=document.getElementById("fs"),cv=document.getElementById("cv");
+ if(document.fullscreenEnabled&&st.requestFullscreen){b.hidden=false;b.onclick=()=>document.fullscreenElement?document.exitFullscreen():st.requestFullscreen().catch(()=>{});document.addEventListener("fullscreenchange",()=>b.textContent=document.fullscreenElement?"전체 화면 끝내기":"전체 화면")}
+ if("IntersectionObserver" in window)new IntersectionObserver(e=>{window.PM_OFF=!e[0].isIntersecting}).observe(cv)})();</script>
 <script>/* 배경음·효과음 모듈 (음성 해설 대신). 음원 파일 없이 Web Audio로 바로 만든다.
    엔진이 쓰는 window.MAMO_VOICE 와 같은 모양(init → {on, scene, stop, resume})이고,
    장면 코드에서는 window.PM_SND.sfx('tick' | 'pop' | 'whoosh' | 'rise' | 'chime' | 'low') 로 효과음을 낸다.
@@ -334,7 +345,7 @@ function render(now) {
 window.CINE_seek = t => { T = clamp(t, 0, LOOP - .01); playing = false; state(); T0guard = false; render(t * 1.37); return cv.toDataURL('image/jpeg', .8) };
 function resize() { const w = cv.clientWidth || 800; cv.width = Math.round(w * Math.min(devicePixelRatio || 1, 2)); cv.height = Math.round(cv.width * H / W); render(performance.now() / 1000) }
 new ResizeObserver(resize).observe(cv);
-function frame(t) { const dt = Math.max(0, Math.min(.1, (t - last) / 1000)); last = t; if (playing && !document.hidden) { T += dt; if (T >= LOOP) { T -= LOOP; T0guard = false } } render(t / 1000); requestAnimationFrame(frame) }
+function frame(t) { const dt = Math.max(0, Math.min(.1, (t - last) / 1000)); last = t; if (window.PM_OFF) { requestAnimationFrame(frame); return } if (playing && !document.hidden) { T += dt; if (T >= LOOP) { T -= LOOP; T0guard = false } } render(t / 1000); requestAnimationFrame(frame) }
 window.CINE = {W, H, P, A, c, clamp, lerp, eio, eout, back, fade, hash, rr, box, line, poly, circ, ell, txt, mono, disp, glow, alpha, grad, tw, kinetic, chip, panel, tick, cross, arrow, dashed, rings, counter, plume, dots,
   night, blueprint, lab, factory, tank, pipe, flange, person, van, truck, car, tree, monitor, doc, phone, station, bars, spark, gauge, mapGrid, haze,
   story(def) { Object.assign(STORY, def); state(); resize(); requestAnimationFrame(frame);
@@ -390,12 +401,14 @@ const ico = {
 };
 
 // 엔진 머리글·전환·후처리 대신 쓰는 것 (u는 실제 초)
+const LOGO = new Image(); LOGO.src = 'assets/logo.png';
 function header(i, u) { const D = window.STORY, n = D.names.length;
-  txt([D.org, D.department].filter(Boolean).join('  ·  '), 48, 56, 15, SUB, 'left', 500); mono(`${pad(i + 1)} / ${pad(n)}`, W - 48, 56, 14, MUTE, 'right', 500);
+  txt([D.org, D.department].filter(Boolean).join('  ·  '), 48, 56, 15, SUB, 'left', 500); if (LOGO.complete && LOGO.naturalWidth) { box(W - 48 - 134, 24, 134, 46, '#fff', 8); c.drawImage(LOGO, W - 48 - 125, 31, 116, 116 * LOGO.naturalHeight / LOGO.naturalWidth) } else mono(`${pad(i + 1)} / ${pad(n)}`, W - 48, 56, 14, MUTE, 'right', 500);
   alpha(eout((u - .15) / .5), () => { mono(pad(i + 1), 48, 104, 16, SKY, 'left', 600); txt(D.names[i], 82, 105, 23, PAPER, 'left', 700) });
   line(48, 124, W - 48, 124, HAIR, 1, 'butt'); line(48, 124, 48 + (W - 96) * clamp(u / D.sceneSec), 124, SKY, 2, 'butt') }
 function wipe(i, u) { if (u > .55) return; const e = eio(u / .55); c.fillStyle = '#0d1422'; c.fillRect(W * e, 0, W * (1 - e) + 1, H); c.fillStyle = SKY; c.fillRect(W * e - 10, 0, 10, H) }
-function post() { const D = window.STORY; // 화면 아래 자막 (소리 없이도 내용이 전달되게)
+function post() { const D = window.STORY; // 화면 아래 자막 (소리 없이도 내용이 전달되게). 좁은 화면에서는 글자가 너무 작아져 페이지 쪽 자막을 쓴다
+  if (c.canvas.clientWidth && c.canvas.clientWidth < 600) return;
   c.fillStyle = grad(0, 590, 0, H, [[0, 'rgba(6,9,16,0)'], [.35, 'rgba(6,9,16,.86)'], [1, 'rgba(6,9,16,.96)']]); c.fillRect(0, 590, W, H - 590);
   const s = D.captions[curScene] || '', k = eout((curU - .25) / .5); if (!s || k <= 0) return;
   const size = 23, max = W - 140, words = s.split(' '), rows = ['']; c.font = `500 ${size}px "IBM Plex Sans KR","Malgun Gothic",sans-serif`;

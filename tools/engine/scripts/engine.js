@@ -227,7 +227,7 @@ function render(now) {
 window.CINE_seek = t => { T = clamp(t, 0, LOOP - .01); playing = false; state(); T0guard = false; render(t * 1.37); return cv.toDataURL('image/jpeg', .8) };
 function resize() { const w = cv.clientWidth || 800; cv.width = Math.round(w * Math.min(devicePixelRatio || 1, 2)); cv.height = Math.round(cv.width * H / W); render(performance.now() / 1000) }
 new ResizeObserver(resize).observe(cv);
-function frame(t) { const dt = Math.max(0, Math.min(.1, (t - last) / 1000)); last = t; if (playing && !document.hidden) { T += dt; if (T >= LOOP) { T -= LOOP; T0guard = false } } render(t / 1000); requestAnimationFrame(frame) }
+function frame(t) { const dt = Math.max(0, Math.min(.1, (t - last) / 1000)); last = t; if (window.PM_OFF) { requestAnimationFrame(frame); return } if (playing && !document.hidden) { T += dt; if (T >= LOOP) { T -= LOOP; T0guard = false } } render(t / 1000); requestAnimationFrame(frame) }
 window.CINE = {W, H, P, A, c, clamp, lerp, eio, eout, back, fade, hash, rr, box, line, poly, circ, ell, txt, mono, disp, glow, alpha, grad, tw, kinetic, chip, panel, tick, cross, arrow, dashed, rings, counter, plume, dots,
   night, blueprint, lab, factory, tank, pipe, flange, person, van, truck, car, tree, monitor, doc, phone, station, bars, spark, gauge, mapGrid, haze,
   story(def) { Object.assign(STORY, def); state(); resize(); requestAnimationFrame(frame);
