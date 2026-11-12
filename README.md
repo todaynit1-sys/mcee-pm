@@ -10,10 +10,10 @@
 | 번호 | 폴더 | 주제 | 상태 |
 |---|---|---|---|
 | 01 | `motion/season` | 미세먼지 계절관리제 | 완성 (25초) |
-| 02 | `motion/car5` | 배출가스 5등급 차량 운행제한 | 자막만 |
-| 03 | `motion/alert` | 고농도 미세먼지 비상저감조치 | 자막만 |
-| 04 | `motion/action` | 고농도 미세먼지 7가지 대응요령 | 자막만 |
-| 05 | `motion/dust` | 미세먼지와 초미세먼지 | 자막만 |
+| 02 | `motion/car5` | 배출가스 5등급 차량 운행제한 | 완성 (25초) |
+| 03 | `motion/alert` | 고농도 미세먼지 비상저감조치 | 완성 (25초) |
+| 04 | `motion/action` | 고농도 미세먼지 7가지 대응요령 | 완성 (25초) |
+| 05 | `motion/dust` | 미세먼지와 초미세먼지 | 완성 (25초) |
 
 ## 만드는 방식
 
@@ -54,12 +54,12 @@ node tools/serve.mjs
 
 http://localhost:4195 에서 미리 봅니다.
 
-### 자막만 있는 편 완성하기
+### 새 편 만들기
 
 1. `motion/<id>/story.json`의 자막을 확정합니다. `todo`가 적힌 편은 먼저 공식 자료와 대조합니다. 자막은 화면 아래 두 줄 안에 들어가게 짧게 씁니다.
 2. `motion/season/scenes.js`를 본보기로 `motion/<id>/scenes.js`를 만듭니다. 장면 함수 개수는 `names` 개수와 같아야 합니다. 그릴 자리는 세로 140~590이고, 그 아래는 자막 자리입니다.
-3. 자주 쓰는 연출(`CINE.K`): `chars`(글자가 하나씩 등장), `reveal`(줄 단위 등장), `burst`·`ring`·`sweep`(강조), `dust`·`haze`·`skyline`·`stars`·`sparks`(배경), `scale`(예보 등급 눈금), `cue(u, 시각, 'tick'|'pop'|'chime'|'rise'|'low')`(효과음).
-4. 장면 그림을 저장합니다. `node tools/engine/scripts/serve.js motion/<id> 4196`을 띄우고 브라우저에서 http://localhost:4196/__capture 를 연 뒤 `node tools/build-all.mjs <id>`를 돌립니다.
+3. 자주 쓰는 연출(`CINE.K`): `chars`(글자가 하나씩 등장), `reveal`(줄 단위 등장), `burst`·`ring`·`sweep`(강조), `dust`·`haze`·`skyline`·`stars`·`sparks`(배경), `scale`(예보 등급 눈금), `icon`(선 그림 기호: truck·car·plant·factory·flame·mask·drop·house·siren·crane·school·lungs 등), `rows`(번호 목록), `title`(큰 두 줄 제목), `tag`·`road`, `cue(u, 시각, 'tick'|'pop'|'chime'|'rise'|'low')`(효과음).
+4. 장면 그림을 저장합니다. `node tools/build-all.mjs <id>`로 한 번 만든 뒤 `node tools/serve.mjs`를 띄우고 브라우저에서 http://localhost:4195/__capture/<id> 를 엽니다. 그다음 `node tools/build-all.mjs <id>`를 한 번 더 돌립니다.
 
 ## 내용 기준
 

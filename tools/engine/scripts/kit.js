@@ -85,5 +85,40 @@ function sweep(k, col = '238,241,244') { if (k <= 0 || k >= 1) return; const x =
 // 맑은 하늘로 올라가는 빛 알갱이
 function sparks(now, a, n = 40, col = SKY) { for (let i = 0; i < n; i++) { const ph = (now * (.08 + hash(i + 4) * .1) + hash(i)) % 1; c.globalAlpha = a * (1 - ph) * .8; c.fillStyle = col; c.beginPath(); c.arc(hash(i + 8) * W + Math.sin(ph * 6 + i) * 20, 620 - ph * 480, 1.4 + hash(i + 2) * 2.2, 0, 6.2832); c.fill() } c.globalAlpha = 1 }
 
-CINE.K = {cue, cam, chars, burst, ring, streaks, sweep, sparks,INK, PAPER, SUB, MUTE, SKY, DUST, HAIR, AQ, pad, mix, bg, stars, dust, haze, skyline, reveal, rule, scale, marker, puff, ico, header, wipe, post};
+// ---- 그림 기호 추가 (모두 가운데 기준, 선 굵기 2.5) ----
+const ln = (x1, y1, x2, y2, col) => line(x1, y1, x2, y2, col, 2.5);
+const path = (col, fn) => { c.beginPath(); fn(); st(col) };
+Object.assign(ico, {
+  car(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 56, y + 20); c.lineTo(x - 56, y + 2); c.quadraticCurveTo(x - 54, y - 6, x - 44, y - 6); c.lineTo(x - 30, y - 6); c.lineTo(x - 14, y - 28); c.lineTo(x + 18, y - 28); c.lineTo(x + 34, y - 6); c.lineTo(x + 50, y - 2); c.quadraticCurveTo(x + 58, y, x + 58, y + 10); c.lineTo(x + 58, y + 20); c.closePath() });
+    for (const wx of [x - 30, x + 32]) { c.beginPath(); c.arc(wx, y + 22, 10, 0, 6.2832); c.fillStyle = INK; c.fill(); st(col) } },
+  mask(x, y, col = PAPER) { path(col, () => c.roundRect(x - 40, y - 24, 80, 48, 14)); ln(x - 26, y - 8, x + 26, y - 8, col); ln(x - 26, y + 8, x + 26, y + 8, col);
+    path(col, () => c.arc(x - 40, y, 16, Math.PI * .5, Math.PI * 1.5)); path(col, () => c.arc(x + 40, y, 16, -Math.PI * .5, Math.PI * .5)) },
+  drop(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 40); c.bezierCurveTo(x + 32, y - 2, x + 30, y + 36, x, y + 36); c.bezierCurveTo(x - 30, y + 36, x - 32, y - 2, x, y - 40) }) },
+  apple(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 18); c.bezierCurveTo(x + 42, y - 40, x + 50, y + 30, x + 10, y + 38); c.quadraticCurveTo(x, y + 32, x - 10, y + 38); c.bezierCurveTo(x - 50, y + 30, x - 42, y - 40, x, y - 18) }); ln(x, y - 18, x + 8, y - 38, col) },
+  cup(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 28, y - 38); c.lineTo(x - 20, y + 38); c.lineTo(x + 20, y + 38); c.lineTo(x + 28, y - 38); c.closePath() }) },
+  window(x, y, col = PAPER) { path(col, () => c.rect(x - 44, y - 40, 88, 80)); ln(x, y - 40, x, y + 40, col); ln(x - 44, y, x + 44, y, col) },
+  house(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 52, y - 4); c.lineTo(x, y - 44); c.lineTo(x + 52, y - 4) }); path(col, () => c.rect(x - 38, y - 4, 76, 44)); path(col, () => c.rect(x - 10, y + 12, 20, 28)) },
+  shield(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 42); c.lineTo(x + 36, y - 28); c.lineTo(x + 36, y + 2); c.quadraticCurveTo(x + 34, y + 28, x, y + 42); c.quadraticCurveTo(x - 34, y + 28, x - 36, y + 2); c.lineTo(x - 36, y - 28); c.closePath() }) },
+  siren(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 26, y + 26); c.lineTo(x - 26, y - 4); c.arc(x, y - 4, 26, Math.PI, 0); c.lineTo(x + 26, y + 26) }); path(col, () => c.rect(x - 38, y + 26, 76, 14));
+    ln(x, y - 42, x, y - 54, col); ln(x - 36, y - 30, x - 46, y - 40, col); ln(x + 36, y - 30, x + 46, y - 40, col) },
+  crane(x, y, col = PAPER) { ln(x - 20, y + 40, x - 20, y - 46, col); ln(x - 50, y - 34, x + 52, y - 34, col); ln(x - 20, y - 46, x + 52, y - 34, col); ln(x - 20, y - 46, x - 50, y - 34, col); ln(x + 34, y - 34, x + 34, y - 6, col); path(col, () => c.rect(x + 24, y - 6, 20, 16)); ln(x - 44, y + 40, x + 4, y + 40, col) },
+  school(x, y, col = PAPER) { path(col, () => c.rect(x - 50, y - 12, 100, 52)); path(col, () => { c.moveTo(x - 24, y - 12); c.lineTo(x, y - 32); c.lineTo(x + 24, y - 12) }); ln(x, y - 32, x, y - 50, col); path(col, () => { c.moveTo(x, y - 50); c.lineTo(x + 16, y - 45); c.lineTo(x, y - 40) }); path(col, () => c.rect(x - 9, y + 16, 18, 24)) },
+  phone(x, y, col = PAPER) { path(col, () => c.roundRect(x - 28, y - 48, 56, 96, 9)); ln(x - 7, y + 40, x + 7, y + 40, col) },
+  filter(x, y, col = PAPER) { path(col, () => c.roundRect(x - 40, y - 20, 80, 40, 16)); ln(x - 60, y, x - 40, y, col); ln(x + 40, y, x + 60, y, col); for (let j = -1; j <= 1; j++) ln(x + j * 18, y - 20, x + j * 18, y + 20, col) },
+  lungs(x, y, col = PAPER) { ln(x, y - 48, x, y - 14, col); for (const d of [-1, 1]) { path(col, () => { c.moveTo(x, y - 14); c.quadraticCurveTo(x + d * 10, y - 10, x + d * 14, y) });
+    path(col, () => { c.moveTo(x + d * 10, y - 24); c.bezierCurveTo(x + d * 50, y - 22, x + d * 58, y + 28, x + d * 46, y + 42); c.bezierCurveTo(x + d * 30, y + 46, x + d * 10, y + 34, x + d * 10, y + 8); c.closePath() }) } },
+});
+// 그림 기호를 크게·뒤집어 그리기
+function icon(name, x, y, s = 1, col = PAPER, flip = false) { c.save(); c.translate(x, y); c.scale(flip ? -s : s, s); ico[name](0, 0, col); c.restore() }
+// 번호가 붙은 목록: 한 줄씩 차례로 등장
+function rows(list, x, y, dy, t0, u, o = {}) { const size = o.size || 30, step = o.step ?? .3; list.forEach((s, i) => { const t = t0 + i * step, yy = y + i * dy; cue(u, t, 'pop');
+  alpha(eout((u - t) / .3), () => mono(pad(i + 1), x, yy - 3, 15, o.ic || SKY, 'left', 600)); chars(s, x + 44, yy, size, t, u, {gap: .02, weight: o.weight || 700, col: o.col}); rule(x, yy + (o.rg ?? 24), o.w || 560, (u - t - .1) / .5) }) }
+// 작은 설명 + 큰 두 줄 제목
+function title(sub, l1, l2, u, o = {}) { const x = o.x ?? 64, sz = o.size || 84, t = o.t0 ?? .3; chars(sub, x, 226, 34, t, u, {col: SUB, weight: 500}); chars(l1, x, 226 + sz + 12, sz, t + .25, u); if (l2) chars(l2, x, 226 + sz * 2 + 26, sz, t + .6, u, {col: o.col2 || SKY}) }
+// 테두리 꼬리표
+function tag(s, x, y, col = SKY, size = 20) { const w = tw(s, size, 700) + 28; box(x, y - size - 8, w, size + 20, 'rgba(10,15,26,.8)', 8, col, 1.5); txt(s, x + 14, y + 2, size, col, 'left', 700); return w }
+// 아래쪽 도로
+function road(now, speed = 120, y = 572) { line(0, y, W, y, HAIR, 1, 'butt'); for (let i = 0; i < 14; i++) { const x = ((i * 100 - now * speed) % 1400 + 1400) % 1400 - 100; line(x, y + 12, x + 44, y + 12, 'rgba(238,241,244,.16)', 2, 'butt') } }
+
+CINE.K = {icon, rows, title, tag, road, cue, cam, chars, burst, ring, streaks, sweep, sparks,INK, PAPER, SUB, MUTE, SKY, DUST, HAIR, AQ, pad, mix, bg, stars, dust, haze, skyline, reveal, rule, scale, marker, puff, ico, header, wipe, post};
 })();
