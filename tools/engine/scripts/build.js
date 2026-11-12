@@ -37,7 +37,7 @@ fs.writeFileSync(file('dist', `${S.id}.html`), page);
 console.log(`dist/${S.id}.html  ${(page.length / 1024).toFixed(0)}KB  장면 ${N}개 × ${sceneSec}초 = ${(N * sceneSec).toFixed(1)}초`);
 if (hasMobile) {
   const m = fill(fs.readFileSync(path.join(skill, 'assets', 'mobile.html'), 'utf8'), {
-    TITLE_PLAIN: esc(plain), ORG: esc(S.org), DEPT: esc(S.department), DESC: esc(S.desc), ACCENT_LIGHT: S.accentLight || '#217569', LOGO: logo, BASIS: esc(S.basis || '그림 속 수치는 이해를 돕기 위한 예시입니다'),
+    TITLE_PLAIN: esc(plain), ORG: esc(S.org), DEPT: esc(S.department), DESC: esc(S.desc), ACCENT_LIGHT: S.accentLight || '#073964', LOGO: logo, BASIS: esc(S.basis || '그림 속 수치는 이해를 돕기 위한 예시입니다'),
     SOURCE: S.source ? ` <a href="${esc(S.source)}" target="_blank" rel="noopener">공식 자료 ↗</a>` : '', VIDEO_LINK: `<a class="btn ghost" href="${esc(S.id)}.html">모션그래픽으로 보기</a>`,
     DATA_JSON: JSON.stringify({names: S.names, captions: S.captions, voice: voice.map(v => v || null), thumbs}).replace(/<\//g, '<\\/')});
   fs.writeFileSync(file('dist', `${S.id}-m.html`), m);
