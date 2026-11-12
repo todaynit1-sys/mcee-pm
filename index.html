@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>미세먼지 계절관리제 모션그래픽</title>
+<meta name="description" content="매년 12월 1일부터 이듬해 3월 31일까지 시행하는 미세먼지 계절관리제를 주제별 모션그래픽으로 소개합니다">
+<meta property="og:title" content="미세먼지 계절관리제 모션그래픽">
+<meta property="og:description" content="매년 12월 1일부터 이듬해 3월 31일까지 시행하는 미세먼지 계절관리제를 주제별 모션그래픽으로 소개합니다">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* 방향: 겨울 새벽 하늘과 대기질 측정. 바탕은 남색 기운의 무채색 한 줄기, 강조색은 하늘색 하나.
+   색과 움직임은 모션그래픽 화면과 예보 등급 눈금 두 군데에만 둔다. */
+:root{--page:#0b0d14;--card:#11141d;--raised:#181c27;--hair:rgba(238,241,244,.1);--hair2:rgba(238,241,244,.2);
+  --text:#eef1f4;--sub:#a3acba;--mute:#7b8596;--accent:#6cc4ff;--ease:cubic-bezier(.22,1,.36,1);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--page);color:var(--text);font-family:'IBM Plex Sans KR','Malgun Gothic',sans-serif;font-size:15px;line-height:1.6;word-break:keep-all}
+a{color:inherit}
+.mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:auto;padding:0 32px}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:var(--text);color:var(--page);padding:8px 12px;border-radius:8px;z-index:9}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:500}
+.brand svg{flex:none}
+.top nav{display:flex;gap:4px}
+.top nav a{font-size:14px;text-decoration:none;color:var(--sub);padding:8px 12px;border-radius:8px;transition:color .15s var(--ease)}
+.top nav a:hover{color:var(--text)}
+
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:center;padding-block:48px 80px}
+.hero p.period{margin:0 0 16px;color:var(--sub);font-size:15px}
+h1{font-weight:500;font-size:clamp(36px,4.6vw,60px);line-height:1.12;letter-spacing:-.02em;margin:0}
+.lead{font-size:18px;line-height:1.6;color:var(--sub);margin:20px 0 0;max-width:440px}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:20px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:10px;background:var(--text);color:var(--page);font-weight:500;font-size:15px;text-decoration:none;transition:background-color .15s var(--ease)}
+.btn:hover{background:#fff}
+.btn:active{transform:scale(.98)}
+.link{color:var(--sub);font-size:15px;text-underline-offset:4px;transition:color .15s var(--ease)}
+.link:hover{color:var(--text)}
+.poster{display:block;border:1px solid var(--hair);border-radius:16px;overflow:hidden;background:#0a0f1a;aspect-ratio:5/3}
+.poster img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* 예보 등급 눈금: 이 사이트의 표식 */
+.fig{margin:40px 0 0;max-width:440px}
+.fig-row{display:flex;align-items:baseline;gap:12px}
+.fig-num{font-size:32px;line-height:1}
+.fig-num small{font-size:15px;color:var(--mute);margin-left:4px}
+.fig-row span{color:var(--sub);font-size:14px}
+.aq{position:relative;display:grid;grid-template-columns:15fr 20fr 40fr 25fr;gap:2px;margin-top:28px}
+.aq i{height:6px;border-radius:2px}
+.aq em{position:absolute;top:-18px;font-style:normal;font-size:12px;color:var(--sub);transform:translateX(-50%)}
+.aq em::after{content:"";position:absolute;left:50%;top:16px;width:1px;height:10px;background:var(--text)}
+.aq-names{display:grid;grid-template-columns:15fr 20fr 40fr 25fr;gap:2px;margin-top:8px;font-size:12px;color:var(--mute)}
+.fig figcaption{margin-top:12px;font-size:13px;color:var(--mute)}
+
+section{padding-block:64px;border-top:1px solid var(--hair)}
+h2{font-weight:500;font-size:28px;line-height:1.3;letter-spacing:-.01em;margin:0 0 24px}
+.watch{display:grid;grid-template-columns:300px minmax(0,1fr);gap:32px;align-items:start}
+.eps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ep{width:100%;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:baseline;text-align:left;font:inherit;color:var(--sub);background:none;border:1px solid transparent;border-radius:10px;padding:12px;cursor:pointer;transition:background-color .15s var(--ease),color .15s var(--ease)}
+.ep:hover{color:var(--text);background:var(--card)}
+.ep .no,.ep .len{font-size:13px;color:var(--mute)}
+.ep b{font-weight:500;font-size:15px;line-height:1.4}
+.ep[aria-pressed=true]{background:var(--raised);border-color:var(--hair);color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.ep[aria-pressed=true] .no{color:var(--accent)}
+.stage-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.stage-head h3{margin:0;font-weight:500;font-size:20px;line-height:1.4}
+.stage-head p{margin:4px 0 0;color:var(--sub);font-size:15px;max-width:520px}
+.links{display:flex;gap:16px;font-size:14px;padding-top:4px}
+iframe{display:block;width:100%;border:0;min-height:420px;background:transparent}
+.soon{border:1px solid var(--hair);border-radius:14px;padding:32px;color:var(--sub)}
+.soon b{display:block;color:var(--text);font-weight:500;font-size:18px;margin-bottom:4px}
+.script{list-style:none;margin:24px 0 0;padding:0;counter-reset:s;border-top:1px solid var(--hair)}
+.script li{display:grid;grid-template-columns:28px 148px 1fr;gap:8px;padding:12px 0;border-bottom:1px solid var(--hair);color:var(--sub);font-size:15px}
+.script li::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);padding-top:2px}
+.script li b{color:var(--text);font-weight:500}
+.basis{font-size:13px;color:var(--mute);margin:16px 0 0}
+
+.more{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px}
+.more p{color:var(--sub);margin:0 0 24px;max-width:440px;font-size:16px}
+.tips{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.tips li{display:grid;grid-template-columns:148px 1fr;gap:8px;padding:12px 0;border-bottom:1px solid var(--hair);color:var(--sub)}
+.tips b{color:var(--text);font-weight:500}
+footer{border-top:1px solid var(--hair);padding:32px 0 48px;color:var(--mute);font-size:13px}
+footer p{margin:0 0 4px}
+
+.rise{animation:rise .5s var(--ease) both}
+.rise:nth-child(2){animation-delay:.05s}.rise:nth-child(3){animation-delay:.1s}.rise:nth-child(4){animation-delay:.15s}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+@media(max-width:900px){
+  .wrap{padding:0 16px}
+  .hero .wrap{grid-template-columns:1fr;gap:32px;padding-block:24px 48px}
+  h1{font-size:36px}
+  .watch,.more{grid-template-columns:1fr;gap:24px}
+  .script li{grid-template-columns:28px 1fr}.script li b{grid-column:2}.script li span{grid-column:2}
+  .tips li{grid-template-columns:1fr;gap:0}
+  section{padding-block:48px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rise{animation:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#watch">모션그래픽으로 바로 가기</a>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 14h16M5 10h10M8 6h4" fill="none" stroke="#6cc4ff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    미세먼지 계절관리제
+  </a>
+  <nav><a href="#watch">모션그래픽</a><a href="#more">체험형 콘텐츠</a></nav>
+</div></header>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div>
+    <p class="period rise">제8차 · 2026년 12월 1일 ~ 2027년 3월 31일</p>
+    <h1 class="rise">미세먼지 계절관리제를 모션그래픽으로 소개합니다</h1>
+    <p class="lead rise">초미세먼지 고농도 시기에 시행하는 배출 저감·관리 조치를 주제별 25초 영상으로 볼 수 있습니다</p>
+    <div class="cta rise"><a class="btn" href="#watch">모션그래픽 보기</a><a class="link" href="https://pm-intro.vercel.app" target="_blank" rel="noopener">체험형 콘텐츠</a></div>
+    <figure class="fig">
+      <div class="fig-row"><b class="fig-num mono">33 → 20<small>㎍/㎥</small></b><span>약 40% 감소</span></div>
+      <div class="aq" aria-hidden="true"><i style="background:#4a9df0"></i><i style="background:#3fb27f"></i><i style="background:#e0b13a"></i><i style="background:#e0564f"></i><em class="mono" style="left:20%">20</em><em class="mono" style="left:33%">33</em></div>
+      <div class="aq-names" aria-hidden="true"><span>좋음</span><span>보통</span><span>나쁨</span><span>매우 나쁨</span></div>
+      <figcaption>계절관리제 기간 초미세먼지(PM-2.5) 평균 농도, 제도 도입 초기 → 제6차</figcaption>
+    </figure>
+  </div>
+  <a class="poster" id="poster" href="#watch" aria-label="모션그래픽 보기"></a>
+</div></div>
+
+<section id="watch"><div class="wrap">
+  <h2>주제별 모션그래픽</h2>
+  <div class="watch">
+    <ul class="eps" id="eps"></ul>
+    <div>
+      <div class="stage-head"><div><h3 id="epTitle"></h3><p id="epDesc"></p></div><div class="links" id="epLinks"></div></div>
+      <div id="epBody"></div>
+      <ol class="script" id="epScript" aria-label="장면별 내용"></ol>
+      <p class="basis" id="epBasis"></p>
+    </div>
+  </div>
+</div></section>
+
+<section id="more"><div class="wrap more">
+  <div>
+    <h2>체험형 콘텐츠</h2>
+    <p>배출가스 5등급 차량 운행제한 단속, 비상저감조치 상황실, 고농도 시 대응요령을 3차원 마을에서 직접 체험할 수 있습니다</p>
+    <a class="link" href="https://pm-intro.vercel.app" target="_blank" rel="noopener">체험형 콘텐츠 열기</a>
+  </div>
+  <ul class="tips">
+    <li><b>발표·교육</b><span>‘새 창에서 보기’로 화면 전체에 띄웁니다</span></li>
+    <li><b>소리</b><span>배경음과 효과음은 ‘소리 켜기’를 누르면 나옵니다. 내용은 화면 자막으로 전달됩니다</span></li>
+    <li><b>휴대폰</b><span>‘휴대폰으로 읽기’는 장면 그림과 자막을 세로로 보여 줍니다</span></li>
+  </ul>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>제8차 미세먼지 계절관리제(’26.12.1.~’27.3.31.) 안내용이며, 세부 시행 내용은 시행계획과 지역에 따라 달라질 수 있습니다</p>
+  <p>실시간 대기질과 예보는 에어코리아, 세부 시행 내용은 관할 지방자치단체 안내를 확인하시기 바랍니다</p>
+</div></footer>
+
+<script>
+const EPS = [{"id":"season","no":1,"title":"미세먼지 계절관리제","desc":"초미세먼지 고농도 시기인 12월부터 이듬해 3월까지 시행하는 제도를 소개합니다","ready":true,"sec":25,"mobile":true,"poster":"season-poster.jpg","names":["고농도 시기","시행 기간","부문별 저감 대책","시행 성과","국민 참여"],"captions":["겨울철과 봄철에는 기상 여건과 난방 등으로 초미세먼지 농도가 높아집니다","제8차 계절관리제는 2026년 12월 1일부터 2027년 3월 31일까지 시행합니다","발전·수송·산업·생활 부문에서 초미세먼지와 그 생성물질의 배출을 줄입니다","계절관리제 기간 초미세먼지 평균 농도는 제도 도입 초기 33㎍/㎥에서 제6차 20㎍/㎥로 낮아졌습니다","대중교통 이용, 적정 실내온도 유지 등 국민의 참여가 더해질 때 효과가 커집니다"],"basis":"제8차 미세먼지 계절관리제(’26.12.1.~’27.3.31.) · 세부 시행계획 발표 전이라 대책별 수치는 싣지 않았습니다 · 농도는 제6차까지의 발표 수치"},{"id":"car5","no":2,"title":"배출가스 5등급 차량 운행제한","desc":"계절관리제 기간 배출가스 5등급 차량의 운행제한 대상과 시간, 제외 차량을 소개합니다","ready":false,"sec":0,"mobile":false,"poster":"","names":["운행제한 대상","시행 지역·시간","단속과 과태료","단속 제외 차량","저공해조치 지원"],"captions":["저공해조치를 하지 않은 배출가스 5등급 차량이 운행제한 대상입니다","계절관리제 기간 평일 오전 6시부터 오후 9시까지, 수도권과 6대 특·광역시에서 시행합니다","무인단속카메라로 단속하며, 위반 시 1일 10만 원의 과태료가 부과됩니다","매연저감장치 부착 등 저공해조치 차량, 긴급자동차, 장애인 차량, 국가유공자 차량 등은 제외됩니다","매연저감장치 부착과 조기폐차 지원 사업을 이용할 수 있습니다"],"basis":"제8차 미세먼지 계절관리제(’26.12.1.~’27.3.31.) 기준 · 세부 기준은 지방자치단체마다 다를 수 있음"},{"id":"alert","no":3,"title":"고농도 미세먼지 비상저감조치","desc":"고농도 초미세먼지가 예상될 때 시행하는 비상저감조치의 발령 기준과 조치 내용을 소개합니다","ready":false,"sec":0,"mobile":false,"poster":"","names":["비상저감조치","발령 기준","차량·사업장","공사장·도로","취약계층 보호"],"captions":["고농도 초미세먼지가 발생하거나 예상될 때 단기간에 배출을 줄이는 조치입니다","당일 평균 50㎍/㎥ 초과와 다음 날 50 초과 예보 등 세 가지 기준 중 하나에 해당하면 발령합니다","배출가스 5등급 차량 운행제한, 행정·공공기관 차량 2부제, 공공사업장 가동시간 단축을 시행합니다","공사장은 공사시간을 조정·변경하고, 도로 청소차는 1일 3회 이상 운영합니다","학교는 야외수업을 금지하고, 취약계층 이용시설에는 보건용 마스크를 지원합니다"],"basis":"고농도 미세먼지 비상저감조치 기준"},{"id":"action","no":4,"title":"고농도 미세먼지 7가지 대응요령","desc":"고농도 미세먼지 발생 시 건강을 지키는 7가지 대응요령을 소개합니다","ready":false,"sec":0,"mobile":false,"poster":"","names":["외출 자제","보건용 마스크","외출 후 씻기","수분·과일 섭취","실내 공기질 관리"],"captions":["외출은 가급적 자제하고, 대기오염이 심한 도로변과 공사장은 피합니다","외출할 때는 식약처 인증 보건용 마스크(KF80, KF94, KF99)를 착용합니다","외출 후에는 손·발·눈·코를 흐르는 물에 씻고 양치합니다","물과 비타민C가 풍부한 과일·야채를 충분히 섭취합니다","환기와 실내 물청소로 실내 공기질을 관리하고, 대기오염 유발 행위를 자제합니다"],"basis":"고농도 미세먼지 7가지 대응요령"},{"id":"dust","no":5,"title":"미세먼지와 초미세먼지","desc":"미세먼지(PM-10)와 초미세먼지(PM-2.5)의 크기, 발생원, 예보 등급을 소개합니다","ready":false,"sec":0,"mobile":false,"poster":"","names":["입자 크기","건강 영향","주요 발생원","예보 등급","대기질 정보"],"captions":["지름 10㎛ 이하는 미세먼지(PM-10), 2.5㎛ 이하는 초미세먼지(PM-2.5)입니다","입자가 작아 코와 기관지에서 걸러지지 않고 폐 깊숙이 침투할 수 있습니다","자동차 배출가스, 사업장·발전소, 난방, 불법소각, 날림먼지 등에서 발생하고 대기 중에서 2차 생성됩니다","초미세먼지 예보 등급은 좋음(0~15), 보통(16~35), 나쁨(36~75), 매우 나쁨(76 이상)입니다","실시간 대기질과 예보는 에어코리아에서 확인할 수 있습니다"],"basis":"초미세먼지(PM-2.5) 예보 등급 기준 (단위 ㎍/㎥)"}];
+const $ = (id) => document.getElementById(id), V = 'mwdkj67q';
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const pad = (n) => String(n).padStart(2, '0');
+function show(id, push) {
+  const e = EPS.find((x) => x.id === id) || EPS.find((x) => x.ready) || EPS[0]; if (!e) return;
+  document.querySelectorAll('.ep').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.id === e.id)));
+  $('epTitle').textContent = e.title; $('epDesc').textContent = e.desc;
+  $('epLinks').innerHTML = e.ready ? `<a class="link" href="${e.id}.html?v=${V}" target="_blank" rel="noopener">새 창에서 보기</a>` + (e.mobile ? `<a class="link" href="${e.id}-m.html?v=${V}">휴대폰으로 읽기</a>` : '') : '';
+  $('epBody').innerHTML = e.ready
+    ? `<iframe id="player" title="${esc(e.title)} 모션그래픽" src="${e.id}.html?embed=1&v=${V}" allow="autoplay" scrolling="no"></iframe>`
+    : `<div class="soon"><b>준비 중</b>장면별 내용을 먼저 확인할 수 있습니다</div>`;
+  $('epScript').innerHTML = e.names.map((n, i) => `<li><b>${esc(n)}</b><span>${esc(e.captions[i])}</span></li>`).join('');
+  $('epBasis').textContent = e.basis;
+  if (push) history.replaceState(null, '', '#' + e.id);
+}
+$('eps').innerHTML = EPS.map((e) => `<li><button class="ep" type="button" data-id="${e.id}" aria-pressed="false"><span class="no mono">${pad(e.no)}</span><b>${esc(e.title)}</b><span class="len${e.ready ? " mono" : ""}">${e.ready ? Math.round(e.sec) + "초" : "준비 중"}</span></button></li>`).join('');
+$('eps').onclick = (ev) => { const b = ev.target.closest('.ep'); if (b) show(b.dataset.id, true) };
+addEventListener('message', (ev) => { const h = ev.data && ev.data.pmMotionH, f = $('player'); if (h && f && ev.source === f.contentWindow) f.style.height = h + 'px' });
+const first = EPS.find((x) => x.poster); if (first) $('poster').innerHTML = `<img src="${first.poster}?v=${V}" alt="${esc(first.title)} 모션그래픽의 한 장면" width="720" height="432">`; else $('poster').remove();
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
