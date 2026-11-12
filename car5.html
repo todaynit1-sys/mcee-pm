@@ -477,7 +477,25 @@ function tag(s, x, y, col = SKY, size = 20) { const w = tw(s, size, 700) + 28; b
 // 아래쪽 도로
 function road(now, speed = 120, y = 572) { line(0, y, W, y, HAIR, 1, 'butt'); for (let i = 0; i < 14; i++) { const x = ((i * 100 - now * speed) % 1400 + 1400) % 1400 - 100; line(x, y + 12, x + 44, y + 12, 'rgba(238,241,244,.16)', 2, 'butt') } }
 
-CINE.K = {icon, rows, title, tag, road, cue, cam, chars, burst, ring, streaks, sweep, sparks,INK, PAPER, SUB, MUTE, SKY, DUST, HAIR, AQ, pad, mix, bg, stars, dust, haze, skyline, reveal, rule, scale, marker, puff, ico, header, wipe, post};
+Object.assign(ico, {
+  drone(x, y, col = PAPER) { path(col, () => c.roundRect(x - 16, y - 6, 32, 16, 5)); ln(x - 16, y - 2, x - 44, y - 12, col); ln(x + 16, y - 2, x + 44, y - 12, col); ln(x - 62, y - 14, x - 26, y - 14, col); ln(x + 26, y - 14, x + 62, y - 14, col);
+    ln(x - 10, y + 10, x - 16, y + 22, col); ln(x + 10, y + 10, x + 16, y + 22, col); path(col, () => c.arc(x, y + 14, 4, 0, 6.2832)) },
+  bus(x, y, col = PAPER) { path(col, () => c.roundRect(x - 58, y - 32, 116, 56, 8)); for (let j = 0; j < 4; j++) path(col, () => c.rect(x - 48 + j * 25, y - 22, 18, 18)); ln(x - 58, y + 6, x + 58, y + 6, col);
+    for (const wx of [x - 32, x + 32]) { c.beginPath(); c.arc(wx, y + 26, 9, 0, 6.2832); c.fillStyle = INK; c.fill(); st(col) } },
+  thermo(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 9, y + 12); c.lineTo(x - 9, y - 36); c.arc(x, y - 36, 9, Math.PI, 0); c.lineTo(x + 9, y + 12); c.arc(x, y + 26, 17, -1, Math.PI + 1) }); ln(x, y + 26, x, y - 14, col); for (let j = 0; j < 3; j++) ln(x + 18, y - 30 + j * 14, x + 28, y - 30 + j * 14, col) },
+  clip(x, y, col = PAPER) { path(col, () => c.roundRect(x - 34, y - 38, 68, 82, 6)); path(col, () => c.rect(x - 14, y - 46, 28, 14)); for (let j = 0; j < 3; j++) ln(x - 20, y - 12 + j * 18, x + 20, y - 12 + j * 18, col) },
+  bolt(x, y, col = PAPER) { path(col, () => { c.moveTo(x + 6, y - 32); c.lineTo(x - 16, y + 4); c.lineTo(x - 1, y + 4); c.lineTo(x - 7, y + 32); c.lineTo(x + 16, y - 6); c.lineTo(x + 1, y - 6); c.closePath() }) },
+});
+// 한 장면 = 큰 번호 + 제목 + 설명 줄(왼쪽) + 그림(오른쪽 art). clear: 하늘이 맑은 정도 0~1
+const tip = (num, ttl, list, clear, art) => (u, T, now) => {
+  bg(clear); stars(now, clear); dust(now, (1 - clear) * .85 + .05, 140, 590); haze((1 - clear) * .7, 280);
+  cue(u, .2, 'low'); alpha(eout((u - .2) / .4), () => mono(num, 58, 300, 150, SKY, 'left', 700));
+  chars(ttl, 64, 392, 54, .5, u);
+  const n = list.length; rows(list, 64, n > 3 ? 448 : 460, n > 3 ? 40 : 46, 1.2, u, {size: n > 3 ? 21 : 23, w: 600, weight: 500, rg: 14, step: .28, ic: MUTE});
+  art(u, now);
+};
+
+CINE.K = {tip, icon, rows, title, tag, road, cue, cam, chars, burst, ring, streaks, sweep, sparks,INK, PAPER, SUB, MUTE, SKY, DUST, HAIR, AQ, pad, mix, bg, stars, dust, haze, skyline, reveal, rule, scale, marker, puff, ico, header, wipe, post};
 })();
 ;// 2편 · 배출가스 5등급 차량 운행제한  (제8차 ’26.12~’27.3)
 (() => {

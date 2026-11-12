@@ -1,0 +1,567 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>첨단감시장비 활용 불법배출 감시 | 수도권대기환경청</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<meta name="description" content="수도권대기환경청이 AI 분석과 이동측정차량, 드론으로 산업단지 불법배출을 감시하는 과정을 소개합니다">
+<meta property="og:title" content="첨단감시장비 활용 불법배출 감시 | 수도권대기환경청"><meta property="og:description" content="수도권대기환경청이 AI 분석과 이동측정차량, 드론으로 산업단지 불법배출을 감시하는 과정을 소개합니다"><meta property="og:image" content="https://mcee-pm.vercel.app/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--page:#f6f8fb;--card:#ffffff;--raised:#edf1f6;--hair:rgba(15,23,42,.12);--text:#0f172a;--sub:#475569;--mute:#64748b;--accent:#073964;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--text);font-family:'IBM Plex Sans KR','Malgun Gothic',sans-serif;margin:0;word-break:keep-all}
+.wrap{max-width:1200px;margin:auto;padding:32px 24px 48px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.logo{display:block;flex:none}.logo img{display:block;height:40px;width:auto}
+header>div{padding-left:16px;border-left:1px solid var(--hair)}
+header p{margin:0;color:var(--sub);font-size:14px}
+h1{font-size:clamp(24px,3.4vw,32px);font-weight:500;margin:4px 0 0;line-height:1.3}
+.stage{border-radius:14px;overflow:hidden;margin:0;background:#0a0f1a;box-shadow:0 8px 24px rgba(15,23,42,.1)}
+canvas{width:100%;aspect-ratio:5/3;display:block}
+.cap{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.stage:fullscreen{display:flex;align-items:center;justify-content:center;background:#000;border:0;border-radius:0}
+.stage:fullscreen canvas{width:min(100vw,166.667vh);height:auto}
+#fs[hidden]{display:none}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+button{font:inherit;font-size:14px;min-height:40px;border:1px solid var(--hair);background:var(--card);color:var(--text);border-radius:10px;cursor:pointer;padding:8px 16px;transition:background-color .15s cubic-bezier(.22,1,.36,1),border-color .15s cubic-bezier(.22,1,.36,1)}
+button:hover{background:var(--raised)}
+button:active{transform:scale(.98)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+#voice{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+#voice.on{border-color:var(--accent);color:var(--accent)}
+.controls a{color:var(--sub);font-size:14px;margin-left:8px}
+#clock{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
+#steps{flex:1 0 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.step{text-align:left;position:relative;overflow:hidden;padding:8px 12px 12px;min-height:56px}
+.step small{display:block;font-size:12px;font-variant-numeric:tabular-nums;color:var(--mute);margin-bottom:4px}
+.step b{font-size:14px;font-weight:500}
+.step i{position:absolute;height:3px;background:var(--accent);bottom:0;left:0}
+.step[aria-current]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.note{font-size:13px;color:var(--mute);line-height:1.7;margin:16px 0 0}
+.note a{color:var(--sub)}
+@media(max-width:640px){.wrap{padding:16px 12px 32px}h1{font-size:22px}.logo img{height:32px}#steps{grid-template-columns:repeat(2,minmax(0,1fr))}button{min-height:44px}
+  .cap{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;display:block;padding:12px 16px 14px;border-top:1px solid var(--hair);background:var(--card)}
+  .cap b{display:block;font-size:13px;font-weight:500;color:var(--accent);margin-bottom:2px}.cap p{margin:0;font-size:16px;line-height:1.6;min-height:3.2em}
+  .stage:fullscreen .cap{display:none}#clock{margin-left:0;flex:1 0 100%;order:9}}
+.embed header,.embed .note,.embed .controls a{display:none}.embed .wrap{padding:0;max-width:none}.embed body{background:transparent;overflow:hidden}
+</style><script>if(/[?&]embed=1/.test(location.search)){document.documentElement.classList.add("embed");addEventListener("load",()=>{const f=()=>parent.postMessage({pmMotionH:document.body.scrollHeight},"*");new ResizeObserver(f).observe(document.body);f()})}</script></head><body><main class="wrap">
+<header><span class="logo"><img src="assets/logo.png" alt="기후에너지환경부 수도권대기환경청" width="128" height="40"></span><div><p>제8차 미세먼지 계절관리제</p><h1>첨단감시장비 활용 불법배출 감시</h1></div></header>
+<figure class="stage"><canvas id="cv" role="img" aria-label="첨단감시장비 활용 불법배출 감시을 설명하는 모션그래픽. 화면 아래 자막으로 내용을 확인할 수 있습니다"></canvas><figcaption class="cap"><b id="capStep"></b><p id="capText" aria-live="polite"></p></figcaption></figure>
+<div class="controls"><button id="play" type="button">일시정지</button><button id="replay" type="button">처음부터</button><button id="voice" type="button" aria-pressed="false">소리 켜기</button><button id="fs" type="button" hidden>전체 화면</button><a href="watch-m.html">휴대폰으로 읽기</a><span id="clock"></span><div id="steps" aria-label="장면 선택"></div></div>
+<p class="note">수도권대기환경청의 제7차 계절관리제 추진 내용 기준 · 제8차 세부 계획 발표 후 보완 예정 · 그림 속 지도와 농도 그래프는 예시 · 그림은 이해를 돕기 위한 개념도입니다 </p>
+</main>
+<script>window.STORY={"id":"watch","org":"수도권대기환경청","department":"제8차 미세먼지 계절관리제","title":"첨단감시장비 활용 불법배출 감시","names":["산업단지 감시","AI 분석","이동측정차량","드론","현장 점검"],"captions":["사업장이 밀집한 산업단지는 계절관리제 기간 불법배출 감시를 강화합니다","도시대기측정망 자료를 AI로 분석해 점검이 필요한 지역을 먼저 선정합니다","이동측정차량이 산업단지를 주행하며 대기 오염도를 실시간으로 측정해 고농도 구간을 찾습니다","드론을 함께 활용해 산업단지 상공의 대기 오염도를 측정합니다","배출이 의심되는 사업장을 선별해 현장 점검하고, 개선 조치로 이어 갑니다"],"accent":"#6cc4ff","sceneSec":5,"voice":[],"glyphs":"좋음보통나쁨매우·사업장이밀집한산단지불법배출감시도대기측정망자료분석로점검역선상를주행하며실간동차량농고구과함께드론으공에서결는현어니다의심별반개조치"};
+(()=>{const st=document.querySelector(".stage"),b=document.getElementById("fs"),cv=document.getElementById("cv");
+ if(document.fullscreenEnabled&&st.requestFullscreen){b.hidden=false;b.onclick=()=>document.fullscreenElement?document.exitFullscreen():st.requestFullscreen().catch(()=>{});document.addEventListener("fullscreenchange",()=>b.textContent=document.fullscreenElement?"전체 화면 끝내기":"전체 화면")}
+ if("IntersectionObserver" in window)new IntersectionObserver(e=>{window.PM_OFF=!e[0].isIntersecting}).observe(cv)})();</script>
+<script>/* 배경음·효과음 모듈 (음성 해설 대신). 음원 파일 없이 Web Audio로 바로 만든다.
+   엔진이 쓰는 window.MAMO_VOICE 와 같은 모양(init → {on, scene, stop, resume})이고,
+   장면 코드에서는 window.PM_SND.sfx('tick' | 'pop' | 'whoosh' | 'rise' | 'chime' | 'low') 로 효과음을 낸다.
+   브라우저 정책상 처음 한 번은 '소리 켜기'를 눌러야 소리가 난다. */
+(() => {
+'use strict';
+const KEY = 'pm-motion-sound';
+const read = () => { try { return localStorage.getItem(KEY) === '1' } catch (e) { return false } };
+const write = v => { try { localStorage.setItem(KEY, v ? '1' : '0') } catch (e) {} };
+const ICON_ON = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 8v4h3l4 3.5V4.5L6 8H3z" fill="currentColor"/><path d="M13 7.2a4 4 0 0 1 0 5.6M15.3 5a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+const ICON_OFF = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 8v4h3l4 3.5V4.5L6 8H3z" fill="currentColor"/><path d="M13.5 7.5l4 5m0-5l-4 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+let ctx = null, master = null, bus = null, echo = null, noiseBuf = null, timer = null, nextT = 0, step = 0, on = false, running = false;
+const BPM = 92, S16 = 60 / BPM / 4;
+// 네 마디 화음 (A단조 → F → C → G), 주파수는 Hz
+const hz = n => 440 * Math.pow(2, (n - 69) / 12);
+const BARS = [[57, 64, 67, 72, 76], [53, 60, 65, 69, 72], [48, 55, 64, 67, 72], [55, 62, 67, 71, 74]];
+
+function boot() { if (ctx) return; const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; ctx = new AC();
+  const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.connect(ctx.destination);
+  master = ctx.createGain(); master.gain.value = 0; master.connect(comp);
+  bus = ctx.createGain(); bus.gain.value = 1; bus.connect(master);
+  echo = ctx.createDelay(1); echo.delayTime.value = S16 * 3; const fb = ctx.createGain(); fb.gain.value = .32; const wet = ctx.createGain(); wet.gain.value = .28;
+  echo.connect(fb); fb.connect(echo); echo.connect(wet); wet.connect(master);
+  noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1 }
+function env(g, t, a, peak, dec) { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec) }
+function tone(type, f, t, a, peak, dec, o = {}) { const osc = ctx.createOscillator(), g = ctx.createGain(); osc.type = type; osc.frequency.setValueAtTime(f, t); if (o.to) osc.frequency.exponentialRampToValueAtTime(o.to, t + (o.glide || dec));
+  if (o.detune) osc.detune.value = o.detune; env(g, t, a, peak, dec); let out = g;
+  if (o.lp) { const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = o.lp; g.connect(fl); out = fl }
+  osc.connect(g); out.connect(o.dry ? master : bus); if (o.echo) out.connect(echo); osc.start(t); osc.stop(t + a + dec + .05) }
+function noise(t, dur, peak, f0, f1, q = 1, type = 'bandpass') { const src = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain(); src.buffer = noiseBuf; src.loop = true; fl.type = type; fl.Q.value = q;
+  fl.frequency.setValueAtTime(f0, t); fl.frequency.exponentialRampToValueAtTime(f1, t + dur); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + dur * .35); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  src.connect(fl); fl.connect(g); g.connect(master); src.start(t); src.stop(t + dur + .05) }
+
+// 배경음: 16분음표 단위로 조금 앞서 예약한다
+function schedule() { if (!running) return; while (nextT < ctx.currentTime + .25) { const s = step % 64, bar = BARS[(s >> 4) % 4], t = nextT;
+    if (s % 16 === 0) { for (const n of [bar[0], bar[1], bar[2]]) for (const dt of [-7, 7]) tone('sawtooth', hz(n), t, .9, .028, S16 * 15, {detune: dt, lp: 900}); tone('sine', hz(bar[0] - 12), t, .02, .2, S16 * 12, {dry: true}) }
+    if (s % 4 === 0) tone('sine', 120, t, .004, .16, .16, {to: 46, glide: .12, dry: true});
+    if (s % 4 === 2) noise(t, .05, .035, 7000, 9000, 2, 'highpass');
+    if (s % 2 === 0) { const arp = [0, 2, 3, 2, 4, 3, 2, 1][(s >> 1) % 8]; tone('triangle', hz(bar[arp] + 12), t, .005, .07, .28, {echo: true}) }
+    nextT += S16; step++ } }
+function start() { if (!ctx || running) return; running = true; nextT = ctx.currentTime + .06; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(.7, ctx.currentTime, .25); timer = setInterval(schedule, 60); schedule() }
+function halt() { if (!ctx) return; running = false; clearInterval(timer); master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0, ctx.currentTime, .08) }
+
+const FX = {
+  tick: t => tone('sine', 1500, t, .002, .12, .07, {dry: true}),
+  pop: t => tone('triangle', 520, t, .004, .2, .16, {to: 980, glide: .09, echo: true}),
+  whoosh: t => noise(t, .5, .2, 300, 3600, .8),
+  rise: t => { tone('sawtooth', 180, t, .5, .05, 1.3, {to: 720, glide: 1.6, lp: 1800}); noise(t, 1.7, .08, 400, 5000, 1.2) },
+  chime: t => { for (const [f, p] of [[1318.5, .16], [1975.5, .09], [2637, .05]]) tone('sine', f, t, .004, p, 1.6, {echo: true}) },
+  low: t => { tone('sine', 110, t, .01, .4, .5, {to: 52, glide: .4, dry: true}); noise(t, .4, .06, 500, 120, .7, 'lowpass') },
+};
+window.PM_SND = { sfx(name) { if (on && running && ctx && FX[name]) FX[name](ctx.currentTime + .01) } };
+window.MAMO_VOICE = {
+  init(o) { const btn = o.button, api = {on: false, scene, stop, resume};
+    function paint() { if (!btn) return; btn.hidden = false; btn.setAttribute('aria-pressed', String(on)); btn.innerHTML = (on ? ICON_ON : ICON_OFF) + `<span>${on ? '소리 켜짐' : '소리 켜기'}</span>`; btn.classList.toggle('on', on) }
+    function enable() { boot(); if (!ctx) return; on = true; ctx.resume(); start(); paint() }
+    function scene() { if (on) window.PM_SND.sfx('whoosh') }
+    function stop() { halt() }
+    function resume() { if (on && ctx) { ctx.resume(); start() } }
+    if (btn) btn.onclick = () => { if (on) { on = false; write(false); halt(); paint() } else { write(true); enable() } };
+    // 지난번에 켜 둔 사람은 화면을 처음 누르는 순간 소리가 다시 켜진다
+    if (read()) addEventListener('pointerdown', function once(e) { removeEventListener('pointerdown', once); if (!on && e.target !== btn && !btn.contains(e.target)) enable() });
+    document.addEventListener('visibilitychange', () => { if (!ctx || !on) return; if (document.hidden) halt(); else start() });
+    paint(); return api; }
+};
+})();
+
+/* 시네마틱 업무 소개 모션 엔진 (motion-explainer 스킬)
+   1200×720 논리 좌표, 야간 네온 톤. 장면 수 = STORY.names 길이, 장면 길이 = STORY.sceneSec(기본 4초).
+   주제 스크립트는 CINE.story({scenes:[fn, ...]}) 로 장면을 등록한다. 각 장면 함수는 (u, T, now)를 받는다.
+   u: 장면 안 연출 시간. 장면 길이와 상관없이 항상 0~4 범위로 들어온다(장면 길이에 맞춰 늘이고 줄임).
+   T: 전체 경과(초), now: 실제 시계(초, 반복 연출용). 자세한 API는 references/engine-api.md */
+(() => {
+'use strict';
+const D = window.STORY, W = 1200, H = 720, N = (D.names || []).length || 5, SCENE = D.sceneSec || 4, LOOP = SCENE * N, PACE = 4 / SCENE;
+const cv = document.getElementById('cv'), c = cv.getContext('2d'), $ = id => document.getElementById(id);
+const P = {bg0:'#040910', bg1:'#0a1726', bg2:'#11263a', line:'#1d3448', text:'#e8f1f5', muted:'#7f98a8', dim:'#4d6577',
+  cyan:'#3de0ff', mag:'#ff3d9a', amber:'#ffb547', mint:'#5fe0b5', violet:'#a58bff', red:'#ff5a5a', green:'#57e39a', white:'#ffffff'};
+const A = D.accent || P.cyan;
+const DISP = '"Black Han Sans","IBM Plex Sans KR","Malgun Gothic",sans-serif', SANS = '"IBM Plex Sans KR","Malgun Gothic",sans-serif', MONO = '"JetBrains Mono",Consolas,monospace';
+
+// ---------- math ----------
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v)), lerp = (a, b, t) => a + (b - a) * t;
+const eio = t => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2 }, eout = t => 1 - Math.pow(1 - clamp(t), 3);
+const back = t => { t = clamp(t); const s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2) };
+const fade = (u, a, b, d = .35) => clamp(Math.min((u - a) / d, (b - u) / d));
+const hash = n => { n = Math.sin(n * 127.1 + 311.7) * 43758.5453; return n - Math.floor(n) };
+
+// ---------- primitives ----------
+function rr(x, y, w, h, r = 8) { c.beginPath(); c.roundRect(x, y, w, h, r) }
+function box(x, y, w, h, fill, r = 8, stroke, lw = 1.5) { rr(x, y, w, h, r); if (fill) { c.fillStyle = fill; c.fill() } if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw; c.stroke() } }
+function line(x1, y1, x2, y2, col = A, w = 2, cap = 'round') { c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.strokeStyle = col; c.lineWidth = w; c.lineCap = cap; c.stroke(); c.lineCap = 'butt' }
+function poly(pts, fill, stroke, lw = 1.5) { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); if (fill) { c.fillStyle = fill; c.fill() } if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw; c.stroke() } }
+function circ(x, y, r, fill, stroke, lw = 2) { c.beginPath(); c.arc(x, y, Math.max(0, r), 0, 6.2832); if (fill) { c.fillStyle = fill; c.fill() } if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw; c.stroke() } }
+function ell(x, y, rx, ry, fill) { c.beginPath(); c.ellipse(x, y, Math.max(0, rx), Math.max(0, ry), 0, 0, 6.2832); c.fillStyle = fill; c.fill() }
+function txt(s, x, y, size = 18, col = P.text, al = 'left', weight = 500, font = SANS) { c.font = `${weight} ${size}px ${font}`; c.fillStyle = col; c.textAlign = al; c.fillText(s, x, y) }
+function mono(s, x, y, size = 16, col = P.text, al = 'left', weight = 600) { txt(s, x, y, size, col, al, weight, MONO) }
+function disp(s, x, y, size = 40, col = P.text, al = 'left') { txt(s, x, y, size, col, al, 400, DISP) }
+function glow(col, blur, fn) { c.save(); c.shadowColor = col; c.shadowBlur = blur; fn(); c.restore() }
+function alpha(a, fn) { if (a <= 0) return; c.save(); c.globalAlpha *= clamp(a); fn(); c.restore() }
+function grad(x1, y1, x2, y2, stops) { const g = c.createLinearGradient(x1, y1, x2, y2); stops.forEach(([o, col]) => g.addColorStop(o, col)); return g }
+function tw(s, size, weight = 500, font = SANS) { c.font = `${weight} ${size}px ${font}`; return c.measureText(s).width }
+function kinetic(s, x, y, size, t0, u, col = P.text) {
+  c.font = `400 ${size}px ${DISP}`; c.textAlign = 'left'; let cx = x;
+  for (let i = 0; i < s.length; i++) { const ch = s[i], w = c.measureText(ch).width, k = eout((u - t0 - i * .03) / .42);
+    if (k > 0) { c.globalAlpha = k; c.fillStyle = col; c.fillText(ch, cx, y + (1 - k) * size * .45) } cx += w }
+  c.globalAlpha = 1; return cx - x;
+}
+function chip(x, y, s, col = A, al = 'left', size = 14) { const w = tw(s, size, 600) + 18, X = al === 'right' ? x - w : al === 'center' ? x - w / 2 : x;
+  alpha(.18, () => box(X, y - size - 3, w, size + 11, col, (size + 11) / 2)); box(X, y - size - 3, w, size + 11, null, (size + 11) / 2, col, 1.2); txt(s, X + 9, y + 1, size, col, 'left', 600); return w }
+function panel(x, y, w, h, title, sub, col = A) {
+  box(x, y, w, h, 'rgba(6,13,22,.88)', 14, 'rgba(61,224,255,.18)');
+  line(x + 18, y + 1, x + 70, y + 1, col, 3);
+  if (title) txt(title, x + 20, y + 36, 19, P.text, 'left', 700);
+  if (sub) mono(sub, x + 20, y + 58, 12, P.muted, 'left', 500);
+}
+function tick(x, y, k = 1, col = P.green, s = 1) { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(s, s); c.beginPath(); c.moveTo(-9, 0); const a = clamp(k * 2), b = clamp(k * 2 - 1);
+  c.lineTo(lerp(-9, -2, a), lerp(0, 8, a)); if (b > 0) c.lineTo(lerp(-2, 13, b), lerp(8, -10, b)); c.strokeStyle = col; c.lineWidth = 4; c.lineCap = 'round'; c.lineJoin = 'round'; c.stroke(); c.restore() }
+function cross(x, y, k = 1, col = P.red) { if (k <= 0) return; const d = 8 * clamp(k); line(x - d, y - d, x + d, y + d, col, 4); line(x + d, y - d, x - d, y + d, col, 4) }
+function arrow(x1, y1, x2, y2, col = A, w = 3, head = 12, k = 1) { const x = lerp(x1, x2, clamp(k)), y = lerp(y1, y2, clamp(k)); line(x1, y1, x, y, col, w); const a = Math.atan2(y2 - y1, x2 - x1);
+  if (k > .05) poly([[x, y], [x - head * Math.cos(a - .45), y - head * Math.sin(a - .45)], [x - head * Math.cos(a + .45), y - head * Math.sin(a + .45)]], col) }
+function dashed(x1, y1, x2, y2, col, w, now, dash = [8, 8], speed = 30) { c.save(); c.setLineDash(dash); c.lineDashOffset = -now * speed; line(x1, y1, x2, y2, col, w); c.restore() }
+function rings(x, y, now, col = A, r0 = 10, r1 = 70, n = 3, speed = .9, a = 1, lw = 2) { for (let k = 0; k < n; k++) { const ph = (now * speed + k / n) % 1; alpha(a * (1 - ph), () => circ(x, y, lerp(r0, r1, ph), null, col, lw)) } }
+function counter(v, dp = 0) { return v.toLocaleString('ko-KR', {minimumFractionDigits: dp, maximumFractionDigits: dp}) }
+// stateless smoke/particle plume: seed-based, loops forever
+function plume(x, y, now, o = {}) { const n = o.n || 16, len = o.len || 120, dx = o.dx ?? 30, col = o.col || 'rgba(190,200,210,', sp = o.speed || .35, r0 = o.r0 || 4, r1 = o.r1 || 16, a0 = o.a ?? .5;
+  for (let i = 0; i < n; i++) { const ph = (now * sp + i / n + (o.seed || 0)) % 1, wob = Math.sin(ph * 6 + i * 2.1) * (o.wob ?? 8);
+    circ(x + dx * ph + wob, y - len * ph, lerp(r0, r1, ph), col + (a0 * (1 - ph)).toFixed(3) + ')') } }
+function dots(pts, now, col = A, n = 6, r = 3.2, speed = .5) { // particles flowing along a polyline
+  const L = []; let tot = 0; for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); L.push(d); tot += d }
+  for (let j = 0; j < n; j++) { let s = ((now * speed + j / n) % 1) * tot, i = 0; while (i < L.length - 1 && s > L[i]) { s -= L[i]; i++ } const q = s / L[i];
+    glow(col, 10, () => circ(lerp(pts[i][0], pts[i + 1][0], q), lerp(pts[i][1], pts[i + 1][1], q), r, col)) } }
+
+// ---------- backdrops ----------
+const STARS = Array.from({length: 70}, (_, i) => ({x: hash(i) * W, y: hash(i + 99) * 330, r: hash(i + 7) * 1.3 + .3, p: hash(i + 3) * 6}));
+const SKY = []; for (let x = -20, i = 0; x < W + 60; i++) { const w = 34 + hash(i * 3.1) * 64, h = 60 + hash(i * 1.7) * 190; SKY.push({x, w, h, b: h > 210}); x += w + 4 + hash(i * 5.3) * 12 }
+function night(now, o = {}) {
+  const gy = o.ground ?? 600;
+  c.fillStyle = grad(0, 0, 0, gy, [[0, '#03070c'], [.72, '#0b1a28'], [1, o.haze || '#1b2238']]); c.fillRect(0, 0, W, gy);
+  c.fillStyle = grad(0, gy - 150, 0, gy, [[0, 'rgba(255,61,154,0)'], [1, o.glow || 'rgba(255,61,154,.12)']]); c.fillRect(0, gy - 150, W, 150);
+  for (const s of STARS) { if (s.y > gy - 140) continue; c.globalAlpha = .3 + .35 * Math.sin(now * 1.4 + s.p); c.fillStyle = '#cfe6f5'; c.fillRect(s.x, s.y, s.r, s.r) } c.globalAlpha = 1;
+  if (o.skyline !== false) { const off = -((now * (o.pan || 0)) % 400); for (const b of SKY) { const x = b.x + off; c.fillStyle = '#08131e'; c.fillRect(x, gy - b.h * (o.city || 1), b.w, b.h * (o.city || 1));
+    if (b.b && Math.sin(now * 3 + b.x) > .3) { c.fillStyle = '#ff4a4a'; c.fillRect(x + b.w / 2 - 2, gy - b.h * (o.city || 1) - 4, 4, 4) } } }
+  c.fillStyle = o.floor || '#070d14'; c.fillRect(0, gy, W, H - gy); c.fillStyle = '#16283a'; c.fillRect(0, gy, W, 2);
+  c.fillStyle = grad(0, gy, 0, H, [[0, 'rgba(61,224,255,.07)'], [1, 'rgba(61,224,255,0)']]); c.fillRect(0, gy, W, H - gy);
+  if (o.grid !== false) { c.save(); c.beginPath(); c.rect(0, gy + 2, W, H - gy); c.clip(); const vx = W / 2, off = ((now * (o.gridSpeed || 0)) % 1);
+    for (let k = -14; k <= 14; k++) line(vx + k * 26, gy, vx + k * 190, H + 40, 'rgba(61,224,255,.07)', 1, 'butt');
+    for (let j = 0; j < 8; j++) { const q = Math.pow((j + off) / 8, 1.8), y = gy + (H - gy) * q; line(0, y, W, y, 'rgba(61,224,255,' + (.03 + .06 * q).toFixed(3) + ')', 1, 'butt') } c.restore() }
+}
+function blueprint() { c.fillStyle = P.bg0; c.fillRect(0, 0, W, H); c.strokeStyle = 'rgba(61,224,255,.05)'; c.lineWidth = 1;
+  for (let x = 0; x <= W; x += 40) line(x, 0, x, H, 'rgba(61,224,255,.05)', 1, 'butt'); for (let y = 0; y <= H; y += 40) line(0, y, W, y, 'rgba(61,224,255,.05)', 1, 'butt');
+  c.fillStyle = grad(0, 0, 0, H, [[0, 'rgba(61,224,255,.04)'], [1, 'rgba(255,61,154,.04)']]); c.fillRect(0, 0, W, H) }
+function lab(floorY = 560) { c.fillStyle = grad(0, 0, 0, floorY, [[0, '#0a1622'], [1, '#12263a']]); c.fillRect(0, 0, W, floorY);
+  for (let x = 0; x < W; x += 120) line(x, 0, x, floorY, 'rgba(61,224,255,.04)', 1, 'butt');
+  for (const lx of [260, 600, 940]) { c.fillStyle = '#dff4ff'; c.fillRect(lx - 60, 0, 120, 5); c.fillStyle = grad(0, 0, 0, 260, [[0, 'rgba(223,244,255,.12)'], [1, 'rgba(223,244,255,0)']]);
+    poly([[lx - 60, 5], [lx + 60, 5], [lx + 130, 260], [lx - 130, 260]], c.fillStyle) }
+  c.fillStyle = '#1b2f40'; c.fillRect(0, floorY, W, 14); c.fillStyle = '#0b1622'; c.fillRect(0, floorY + 14, W, H - floorY - 14);
+  for (let x = 20; x < W; x += 150) box(x, floorY + 26, 136, H - floorY - 40, null, 6, '#16293a') }
+
+// ---------- objects ----------
+function factory(x, y, s = 1, o = {}) { c.save(); c.translate(x, y); c.scale(s, s);
+  const w = o.w || 260, h = o.h || 130, col = o.col || '#10202f';
+  c.fillStyle = col; c.fillRect(0, -h, w, h); const n = Math.floor(w / 60); c.beginPath(); c.moveTo(0, -h);
+  for (let i = 0; i < n; i++) { c.lineTo(i * w / n, -h - 26); c.lineTo((i + 1) * w / n, -h) } c.closePath(); c.fill();
+  c.fillStyle = 'rgba(255,196,110,.55)'; for (let wx = 16; wx < w - 16; wx += 24) c.fillRect(wx, -h + 30, 10, 12);
+  if (o.label) txt(o.label, 16, -18, 16, '#9db2bf', 'left', 700);
+  if (o.stack !== false) { const sx = o.sx ?? w * .72, sh = o.sh || 150; c.fillStyle = '#16304a'; c.fillRect(sx - 12, -h - sh, 24, sh + 2); c.fillStyle = '#b8554a'; c.fillRect(sx - 12, -h - sh + 12, 24, 9);
+    c.fillStyle = Math.sin((o.now || 0) * 4 + x) > 0 ? '#ff4a4a' : '#4a1a1a'; c.fillRect(sx - 2, -h - sh - 6, 4, 4);
+    if (o.smoke) plume(sx, -h - sh - 6, o.now || 0, {col: o.smokeCol || 'rgba(190,200,210,', a: o.smokeA ?? .45, len: 140, dx: 50, n: 14}) }
+  c.restore() }
+function tank(x, y, s = 1, col = '#223e52') { c.save(); c.translate(x, y); c.scale(s, s);
+  c.fillStyle = grad(-50, 0, 50, 0, [[0, '#15293a'], [.4, col], [1, '#0f1e2b']]); c.fillRect(-50, -140, 100, 140);
+  ell(0, -140, 50, 14, '#34566c'); ell(0, 0, 50, 12, '#0f1e2b'); for (const yy of [-100, -55]) line(-50, yy, 50, yy, 'rgba(159,176,187,.35)', 2);
+  line(38, -138, 38, -4, '#6b8797', 2); for (let j = 0; j < 8; j++) line(30, -128 + j * 16, 46, -128 + j * 16, '#6b8797', 1.5); c.restore() }
+function pipe(pts, col = '#2a4a60', w = 12) { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.strokeStyle = col; c.lineWidth = w; c.lineJoin = 'round'; c.stroke();
+  c.strokeStyle = 'rgba(200,220,230,.18)'; c.lineWidth = w * .3; c.stroke(); c.lineJoin = 'miter' }
+function flange(x, y, vert = false) { c.fillStyle = '#6b8797'; if (vert) c.fillRect(x - 11, y - 3, 22, 6); else c.fillRect(x - 3, y - 11, 6, 22) }
+function person(x, y, s = 1, o = {}) { c.save(); c.translate(x, y); c.scale(o.flip ? -s : s, s);
+  const now = o.now || 0, pose = o.pose || 'stand', vest = o.vest || '#f08a2e', sw = pose === 'walk' ? Math.sin(now * 9) * 7 : 0;
+  ell(0, 2, 18, 4, 'rgba(0,0,0,.35)'); c.lineCap = 'round';
+  c.strokeStyle = '#27415a'; c.lineWidth = 7; line(-4, -32, -4 + sw, -2, '#27415a', 7); line(4, -32, 4 - sw, -2, '#27415a', 7);
+  box(-11, -64, 22, 34, vest, 6); c.fillStyle = '#f3f0d8'; c.fillRect(-11, -52, 22, 3); c.fillRect(-11, -43, 22, 3);
+  if (pose === 'point') { line(-8, -58, -12, -36, vest, 6); line(8, -58, 30, -70, vest, 6) }
+  else if (pose === 'tablet') { line(-8, -58, 14, -44, vest, 6); line(8, -58, 18, -46, vest, 6); box(10, -56, 20, 15, '#0d1b28', 3, A, 1.5); alpha(.6 + .4 * Math.sin(now * 5), () => c.fillRect(13, -53, 14, 9)) }
+  else if (pose === 'probe') { line(-8, -58, 22, -44, vest, 6); line(8, -58, 26, -42, vest, 6) }
+  else { line(-8, -58, -10 - sw * .6, -36, vest, 6); line(8, -58, 10 + sw * .6, -36, vest, 6) }
+  if (o.woman) { c.fillStyle = '#75415a'; c.beginPath(); c.moveTo(-7, -80); c.bezierCurveTo(-22, -81, -19, -62, -27, -53); c.bezierCurveTo(-33, -42, -23, -34, -14, -41); c.bezierCurveTo(-12, -46, -15, -54, -12, -61); c.closePath(); c.fill(); box(-17, -67, 7, 4, '#a58bff', 2) }
+  circ(0, -73, 8, '#e8c4a0'); if (o.helmet !== false) { c.fillStyle = o.hat || '#f5c542'; c.beginPath(); c.arc(0, -76, 10, Math.PI, 0); c.fill(); c.fillRect(-12, -77, 24, 3) }
+  else { c.fillStyle = '#2a2320'; c.beginPath(); c.arc(0, -76, 9, Math.PI, 0); c.fill() }
+  if (o.woman) { line(-7, -75, -7, -67, '#75415a', 2.5); circ(2, -73, 1, '#332927') }
+  c.lineCap = 'butt'; c.restore() }
+function van(x, y, s = 1, o = {}) { c.save(); c.translate(x, y); c.scale(s, s); const now = o.now || 0;
+  if (o.beam) { c.globalCompositeOperation = 'lighter'; c.fillStyle = grad(300, 0, 700, 0, [[0, 'rgba(220,240,255,.28)'], [1, 'rgba(220,240,255,0)']]); poly([[300, -62], [740, -120], [740, 30], [300, -46]], c.fillStyle); c.globalCompositeOperation = 'source-over' }
+  ell(150, 2, 160, 7, 'rgba(0,0,0,.5)');
+  if (o.mast !== false) { const mh = o.mastH ?? 70; line(48, -122, 48, -122 - mh, '#c8d4db', 5); poly([[34, -134 - mh], [62, -134 - mh], [55, -122 - mh], [41, -122 - mh]], '#dfe8ed'); if (o.intake) rings(48, -128 - mh, now, A, 8, 70, 3, 1.1, .7) }
+  c.fillStyle = grad(0, -124, 0, -20, [[0, '#f6f9fb'], [1, '#b9c7d0']]); c.beginPath(); c.moveTo(8, -20); c.lineTo(4, -104); c.quadraticCurveTo(6, -124, 26, -124); c.lineTo(216, -126);
+  c.quadraticCurveTo(232, -126, 244, -112); c.lineTo(278, -76); c.quadraticCurveTo(284, -70, 296, -66); c.lineTo(306, -62); c.quadraticCurveTo(314, -58, 314, -46); c.lineTo(314, -26); c.quadraticCurveTo(314, -20, 306, -20); c.closePath(); c.fill();
+  c.save(); c.clip(); c.fillStyle = grad(0, 0, 314, 0, [[0, A], [.6, '#7b8cff'], [1, P.mag]]); poly([[0, -50], [314, -54], [314, -40], [0, -36]], c.fillStyle); c.restore();
+  poly([[222, -114], [242, -114], [270, -80], [222, -80]], '#10202c', 'rgba(61,224,255,.5)', 1.2);
+  txt(o.label || D.org || '', 18, -80, 23, '#0c1d2a', 'left', 400, DISP); if (o.sub) mono(o.sub, 20, -62, 11, '#1d4a63', 'left', 700);
+  box(104, -136, 72, 11, '#1a2733', 5); const bl = Math.sin(now * 9) > 0; glow(bl ? A : P.mag, 18, () => { box(107, -134, 32, 7, bl ? A : '#16414d', 3); box(141, -134, 32, 7, bl ? '#4d1631' : P.mag, 3) });
+  glow('#fff3cf', 16, () => box(304, -60, 9, 9, '#ffe9b0', 2)); glow('#ff3b3b', 14, () => box(4, -64, 5, 13, '#ff3b3b', 2));
+  for (const wx of [70, 262]) { circ(wx, -22, 23, '#05080c'); circ(wx, -22, 12, '#9fb3bf'); for (let k = 0; k < 5; k++) { const a = (o.spin || 0) + k * 1.2566; line(wx, -22, wx + Math.cos(a) * 11, -22 + Math.sin(a) * 11, '#3b4d59', 2.5) } circ(wx, -22, 4, '#1d2a33') }
+  c.restore() }
+function truck(x, y, s = 1, o = {}) { c.save(); c.translate(x, y); c.scale(s, s); const now = o.now || 0, old = o.old;
+  ell(140, 2, 150, 7, 'rgba(0,0,0,.5)');
+  const body = old ? '#5b5f6e' : (o.col || '#dfe8ec'), cab = old ? '#6c7182' : (o.cab || '#cfdadf');
+  box(0, -118, 190, 92, body, 6); if (old) { c.fillStyle = 'rgba(90,60,40,.35)'; for (let i = 0; i < 6; i++) c.fillRect(12 + i * 30, -110 + (i % 2) * 20, 14, 30) }
+  c.beginPath(); c.moveTo(194, -26); c.lineTo(194, -96); c.lineTo(250, -96); c.lineTo(282, -56); c.lineTo(282, -26); c.closePath(); c.fillStyle = cab; c.fill();
+  poly([[204, -88], [244, -88], [266, -60], [204, -60]], '#10202c'); c.fillStyle = old ? '#3b3f4b' : A; c.fillRect(0, -34, 282, 7);
+  if (o.label) txt(o.label, 95, -68, 17, old ? '#d0d3da' : '#10202c', 'center', 700);
+  if (o.exhaust !== false) { c.fillStyle = '#39424c'; c.fillRect(-12, -40, 16, 6); if (o.smoke) plume(-14, -38, now, {col: old ? 'rgba(40,40,44,' : 'rgba(200,210,220,', a: old ? .85 : .25, len: 90, dx: -110, n: 16, r0: 5, r1: old ? 30 : 14, speed: .6, wob: 10}) }
+  glow('#fff3cf', 14, () => box(274, -54, 8, 9, '#ffe9b0', 2));
+  for (const wx of [52, 236]) { circ(wx, -18, 22, '#05080c'); circ(wx, -18, 11, '#8f9ea8'); for (let k = 0; k < 5; k++) { const a = (o.spin || 0) + k * 1.2566; line(wx, -18, wx + Math.cos(a) * 10, -18 + Math.sin(a) * 10, '#3b4d59', 2.5) } }
+  c.restore() }
+function car(x, y, s = 1, col = '#4d7bd6', o = {}) { c.save(); c.translate(x, y); c.scale(o.flip ? -s : s, s); ell(82, 3, 94, 6, 'rgba(0,0,0,.45)');
+  // Right-facing sedan: short rear deck, sloped front glass, long bonnet, distinct lamps.
+  c.beginPath(); c.moveTo(0, -18); c.lineTo(0, -33); c.quadraticCurveTo(2, -40, 12, -40); c.lineTo(32, -40);
+  c.lineTo(51, -63); c.quadraticCurveTo(55, -68, 64, -68); c.lineTo(95, -68); c.quadraticCurveTo(103, -68, 108, -62);
+  c.lineTo(124, -40); c.lineTo(154, -36); c.quadraticCurveTo(166, -34, 166, -22); c.lineTo(166, -18); c.closePath(); c.fillStyle = col; c.fill();
+  poly([[53, -61], [78, -61], [78, -42], [37, -42]], '#10202c'); poly([[83, -61], [96, -61], [117, -42], [83, -42]], '#10202c');
+  line(81, -61, 81, -22, 'rgba(8,22,34,.45)', 1.5); line(38, -39, 27, -39, 'rgba(255,255,255,.38)', 2);
+  box(123, -41, 12, 3, '#8f9ead', 2); box(140, -36, 18, 3, 'rgba(255,255,255,.4)', 2);
+  glow('#fff3cf', 15, () => box(155, -32, 9, 8, '#fff0bd', 2)); box(1, -34, 6, 10, '#ff4545', 2); box(161, -22, 5, 4, '#162330', 1);
+  for (const wx of [35, 130]) { circ(wx, -13, 14, '#05080c'); circ(wx, -13, 7, '#a9b9c3');
+    for (let k = 0; k < 4; k++) { const a = (o.spin || 0) + k * Math.PI / 2; line(wx, -13, wx + Math.cos(a) * 6, -13 + Math.sin(a) * 6, '#415564', 1.4) }
+    circ(wx, -13, 2.2, '#263744') } c.restore() }
+function tree(x, y, s = 1) { c.save(); c.translate(x, y); c.scale(s, s); line(0, 0, 0, -40, '#3a2f28', 6); circ(0, -56, 24, '#12382f'); circ(-14, -46, 17, '#18483b'); circ(12, -64, 17, '#1e5a48'); c.restore() }
+function monitor(x, y, w, h, o = {}) { box(x - 6, y - 6, w + 12, h + 12, '#22364a', 10); box(x, y, w, h, '#050d15', 5); if (o.stand !== false) { c.fillStyle = '#22364a'; c.fillRect(x + w / 2 - 6, y + h + 6, 12, 18); c.fillRect(x + w / 2 - 30, y + h + 22, 60, 5) } }
+function doc(x, y, w, h, o = {}) { box(x, y, w, h, o.fill || '#eef3f1', 6); if (o.head) { box(x, y, w, 34, o.head, [6, 6, 0, 0]); if (o.title) txt(o.title, x + 14, y + 23, 15, '#fff', 'left', 700) }
+  const rows = o.rows || 5; for (let i = 0; i < rows; i++) { const yy = y + (o.head ? 56 : 24) + i * 22; c.fillStyle = '#c6d2d6'; c.fillRect(x + 14, yy, (w - 28) * (i % 3 === 2 ? .6 : .9), 6) } }
+function phone(x, y, s = 1, fn) { c.save(); c.translate(x, y); c.scale(s, s); box(-60, -120, 120, 240, '#0d1824', 18, '#3a5266', 3); box(-52, -106, 104, 212, '#050d15', 8); c.save(); rr(-52, -106, 104, 212, 8); c.clip(); fn && fn(); c.restore(); box(-16, -114, 32, 4, '#3a5266', 2); c.restore() }
+function station(x, y, s = 1, o = {}) { c.save(); c.translate(x, y); c.scale(s, s); const now = o.now || 0;
+  ell(90, 2, 110, 7, 'rgba(0,0,0,.45)'); box(0, -120, 180, 120, '#d9e3e8', 6); c.fillStyle = '#b8c7cf'; c.fillRect(0, -120, 180, 10);
+  box(22, -92, 60, 60, '#0d1b28', 4, 'rgba(61,224,255,.4)'); for (let i = 0; i < 4; i++) { c.fillStyle = [P.cyan, P.mint, P.amber, P.violet][i]; c.globalAlpha = .6 + .4 * Math.sin(now * 3 + i); c.fillRect(30 + i * 13, -80, 8, 36 * (.4 + .5 * Math.abs(Math.sin(now + i)))); } c.globalAlpha = 1;
+  box(104, -92, 56, 92, '#9fb0b8', 3); circ(150, -46, 3, '#5d707a');
+  line(130, -120, 130, -186, '#c8d4db', 5); poly([[116, -198], [144, -198], [138, -186], [122, -186]], '#dfe8ed'); if (o.intake) rings(130, -192, now, A, 8, 60, 3, 1, .7);
+  line(40, -120, 40, -170, '#c8d4db', 3); for (let k = 0; k < 3; k++) { const a = now * 8 + k * 2.09; circ(40 + Math.cos(a) * 12, -170 + Math.sin(a) * 3, 3.5, '#e8eef2') }
+  txt(o.label || '대기측정소', 90, -104, 13, '#2a4658', 'center', 700); c.restore() }
+function bars(x, y, w, h, vals, cols, o = {}) { const n = vals.length, bw = w / n * .6, gap = w / n; vals.forEach((v, i) => { const bh = h * clamp(v); const col = Array.isArray(cols) ? cols[i] : cols;
+  glow(col, o.glow ?? 12, () => box(x + i * gap + (gap - bw) / 2, y - bh, bw, Math.max(1, bh), col, 4)); if (o.labels) txt(o.labels[i], x + i * gap + gap / 2, y + 22, 14, P.muted, 'center', 600) }) }
+function spark(x, y, w, h, fn, k = 1, col = A, lw = 2.5) { c.beginPath(); const N = 80; for (let i = 0; i <= N * clamp(k); i++) { const q = i / N, yy = y - h * clamp(fn(q)); i ? c.lineTo(x + w * q, yy) : c.moveTo(x + w * q, yy) } c.strokeStyle = col; c.lineWidth = lw; c.stroke() }
+function gauge(x, y, r, v, col = A, label, valTxt) { c.lineCap = 'round'; c.beginPath(); c.arc(x, y, r, Math.PI * .8, Math.PI * 2.2); c.strokeStyle = '#16293a'; c.lineWidth = 12; c.stroke();
+  c.beginPath(); c.arc(x, y, r, Math.PI * .8, Math.PI * (.8 + 1.4 * clamp(v))); c.strokeStyle = col; glow(col, 16, () => c.stroke()); c.lineCap = 'butt';
+  if (valTxt) mono(valTxt, x, y + 8, r * .42, P.text, 'center', 700); if (label) txt(label, x, y + r * .72, 13, P.muted, 'center', 600) }
+function mapGrid(x, y, w, h, o = {}) { box(x, y, w, h, '#07111a', 14); c.save(); rr(x, y, w, h, 14); c.clip();
+  const bs = o.block || 110; for (let bx = x - 10; bx < x + w; bx += bs) for (let by = y - 10; by < y + h; by += bs) box(bx + 12, by + 12, bs - 24, bs - 24, '#0d1c29', 3);
+  for (let bx = x - 10; bx < x + w + 10; bx += bs) line(bx, y, bx, y + h, '#12283a', 14, 'butt'); for (let by = y - 10; by < y + h + 10; by += bs) line(x, by, x + w, by, '#12283a', 14, 'butt');
+  if (o.river) { c.strokeStyle = 'rgba(61,150,255,.25)'; c.lineWidth = 30; c.beginPath(); c.moveTo(x, y + h * .78); c.bezierCurveTo(x + w * .3, y + h * .6, x + w * .6, y + h * .95, x + w, y + h * .7); c.stroke() }
+  c.restore(); box(x, y, w, h, null, 14, '#1d3448') }
+function haze(k, col = '160,140,110') { c.fillStyle = grad(0, 150, 0, 620, [[0, `rgba(${col},0)`], [1, `rgba(${col},${.5 * clamp(k)})`]]); c.fillRect(0, 150, W, 470) }
+
+// ---------- post, header, transitions ----------
+const scan = document.createElement('canvas'); scan.width = 4; scan.height = 4; { const s = scan.getContext('2d'); s.fillStyle = 'rgba(0,0,0,.2)'; s.fillRect(0, 0, 4, 1) } let scanPat = null;
+function post() { c.fillStyle = (() => { const g = c.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * 1.05); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.55)'); return g })(); c.fillRect(0, 0, W, H);
+  if (!scanPat) scanPat = c.createPattern(scan, 'repeat'); c.fillStyle = scanPat; c.globalAlpha = .45; c.fillRect(0, 0, W, H); c.globalAlpha = 1 }
+function header(i, u) {
+  mono([D.org, D.department].filter(Boolean).join('  ·  '), 44, 48, 13, A, 'left', 600);
+  mono(`${String(i + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}`, W - 44, 48, 13, P.muted, 'right', 600);
+  const hide = STORY.hideTitle && STORY.hideTitle[i]; if (hide) return;
+  c.fillStyle = grad(0, 0, 0, 150, [[0, 'rgba(3,7,12,.7)'], [1, 'rgba(3,7,12,0)']]); c.fillRect(0, 0, W, 150);
+  kinetic(D.names[i], 42, 104, 44, .15, u, P.text);
+  alpha(eout((u - .45) / .4), () => { const w = tw(D.names[i], 44, 400, DISP); line(46, 120, 46 + Math.min(w, 60 + w * eout((u - .45) / .6)), 120, A, 3) });
+}
+function wipe(i, u) { if (u > .55 || (i === 0 && T0guard)) return; const k = u / .55, x = lerp(-420, W + 420, eio(k));
+  c.fillStyle = (() => { const g = c.createLinearGradient(x - 220, 0, x + 220, 0); g.addColorStop(0, 'rgba(61,224,255,0)'); g.addColorStop(.45, 'rgba(61,224,255,.85)'); g.addColorStop(.55, 'rgba(255,61,154,.85)'); g.addColorStop(1, 'rgba(255,61,154,0)'); return g })();
+  poly([[x - 170, 0], [x + 270, 0], [x + 170, H], [x - 270, H]], c.fillStyle); c.fillStyle = `rgba(255,255,255,${.22 * (1 - k)})`; c.fillRect(0, 0, W, H) }
+let T0guard = true;
+
+// ---------- player ----------
+const STORY = {scenes: []};
+const buttons = D.names.map((name, i) => { const b = document.createElement('button'); b.className = 'step'; b.type = 'button'; b.innerHTML = `<small>${Math.round(i * SCENE)}초</small><b>${name}</b><i></i>`;
+  b.onclick = () => { T = i * SCENE + .02; T0guard = false; if (!playing) { playing = true; state() } cur = -2; }; $('steps').append(b); return b });
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const V = window.MAMO_VOICE.init({button: $('voice'), clips: D.voice || [], id: D.id,
+  onEnable: () => { T = Math.floor(T / SCENE) * SCENE + .02; T0guard = false; if (!playing) { playing = true; state() } cur = -2 } });
+const subtitleEl = $('subtitle'), subtitlesBtn = $('subtitles');
+if (subtitlesBtn && subtitleEl) subtitlesBtn.onclick = () => { const on = subtitlesBtn.getAttribute('aria-pressed') !== 'true'; subtitlesBtn.setAttribute('aria-pressed', String(on)); subtitlesBtn.textContent = on ? '자막 끄기' : '자막 켜기'; subtitlesBtn.classList.toggle('on', on); subtitleEl.hidden = !on };
+let T = V.on ? 0 : 1.6, playing = !reduce, last = performance.now(), cur = -1;
+const qt = new URLSearchParams(location.search).get('t'); if (qt !== null && isFinite(+qt)) { T = clamp(+qt, 0, LOOP - .01); playing = false; T0guard = false }
+function state() { $('play').textContent = playing ? '일시정지' : '재생' }
+$('play').onclick = () => { playing = !playing; last = performance.now(); state(); if (!playing) V.stop(); else V.resume && V.resume() };
+$('replay').onclick = () => { V.resume && V.resume(); T = 0; T0guard = false; playing = true; last = performance.now(); state(); cur = -2 };
+function render(now) {
+  const s = cv.width / W; c.setTransform(s, 0, 0, s, 0, 0); c.clearRect(0, 0, W, H);
+  const i = Math.min(N - 1, Math.floor(T / SCENE)), u = T - i * SCENE;
+  c.save(); try { STORY.scenes[i](u * PACE, T, now) } catch (e) { console.error(e) } c.restore();
+  (STORY.header || header)(i, u); (STORY.post || post)(); (STORY.wipe || wipe)(i, u);
+  $('clock').textContent = `00:${String(Math.floor(T)).padStart(2, '0')} / 00:${String(Math.round(LOOP)).padStart(2, '0')}`;
+  if (cur !== i) { const fresh = cur !== -1; cur = i; $('capStep').textContent = `0${i + 1} ${D.names[i]}`; $('capText').textContent = D.captions[i]; if (subtitleEl) subtitleEl.textContent = D.captions[i];
+    buttons.forEach((b, j) => j === i ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current')); if (playing && (fresh || T < .5)) V.scene(i) }
+  buttons.forEach((b, j) => b.querySelector('i').style.width = (j < i ? 100 : j > i ? 0 : u / SCENE * 100) + '%');
+}
+window.CINE_seek = t => { T = clamp(t, 0, LOOP - .01); playing = false; state(); T0guard = false; render(t * 1.37); return cv.toDataURL('image/jpeg', .8) };
+function resize() { const w = cv.clientWidth || 800; cv.width = Math.round(w * Math.min(devicePixelRatio || 1, 2)); cv.height = Math.round(cv.width * H / W); render(performance.now() / 1000) }
+new ResizeObserver(resize).observe(cv);
+function frame(t) { const dt = Math.max(0, Math.min(.1, (t - last) / 1000)); last = t; if (window.PM_OFF) { requestAnimationFrame(frame); return } if (playing && !document.hidden) { T += dt; if (T >= LOOP) { T -= LOOP; T0guard = false } } render(t / 1000); requestAnimationFrame(frame) }
+window.CINE = {W, H, P, A, c, clamp, lerp, eio, eout, back, fade, hash, rr, box, line, poly, circ, ell, txt, mono, disp, glow, alpha, grad, tw, kinetic, chip, panel, tick, cross, arrow, dashed, rings, counter, plume, dots,
+  night, blueprint, lab, factory, tank, pipe, flange, person, van, truck, car, tree, monitor, doc, phone, station, bars, spark, gauge, mapGrid, haze,
+  story(def) { Object.assign(STORY, def); state(); resize(); requestAnimationFrame(frame);
+    const g = (D.glyphs || '') + D.names.join('') + '0123456789/·%'; if (document.fonts && document.fonts.load) Promise.all(['400 40px "Black Han Sans"', '500 16px "IBM Plex Sans KR"', '700 16px "IBM Plex Sans KR"', '600 16px "JetBrains Mono"'].map(f => document.fonts.load(f, g).catch(() => {}))).then(() => render(performance.now() / 1000)) }};
+})();
+
+/* 계절관리제 모션 공통 스타일 (CINE.K)
+   밤 네온 대신: 짙은 남색 바탕, 큰 글자, 얇은 선, 강조색 하나(하늘색), 먼지는 모래색.
+   장면 파일에서  CINE.story({scenes, header: K.header, wipe: K.wipe, post: K.post})  로 쓴다. */
+(() => {
+const {W, H, c, clamp, lerp, eio, eout, hash, box, line, circ, txt, mono, alpha, grad, tw} = CINE;
+const INK = '#0a0f1a', PAPER = '#eef1f4', SUB = '#9aa7b8', MUTE = '#66758a', SKY = '#6cc4ff', DUST = '#c9a36b', HAIR = 'rgba(238,241,244,.14)';
+// 초미세먼지(PM-2.5) 예보 등급: 이름, 상한(㎍/㎥), 색
+const AQ = [['좋음', 15, '#4a9df0'], ['보통', 35, '#3fb27f'], ['나쁨', 75, '#e0b13a'], ['매우 나쁨', 100, '#e0564f']];
+const pad = n => String(n).padStart(2, '0');
+const mix = (a, b, t) => { const p = s => s[0] === '#' ? [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)) : s.match(/\d+/g).map(Number), A = p(a), B = p(b); return 'rgb(' + A.map((v, i) => Math.round(lerp(v, B[i], clamp(t)))).join(',') + ')' };
+
+// 바탕: clear 1 = 맑은 밤하늘, 0 = 먼지 낀 하늘
+function bg(clear = 1) { c.fillStyle = grad(0, 0, 0, H, [[0, mix('#17150f', INK, clear)], [1, mix('#3b3122', '#13203a', clear)]]); c.fillRect(0, 0, W, H) }
+function stars(now, a = 1) { for (let i = 0; i < 46; i++) { c.globalAlpha = a * (.25 + .3 * Math.sin(now * 1.2 + i * 2.3)); c.fillStyle = PAPER; c.fillRect(hash(i) * W, 140 + hash(i + 40) * 330, 1.6, 1.6) } c.globalAlpha = 1 }
+function dust(now, k, y0 = 140, y1 = 700) { for (let i = 0; i < 150; i++) { if (hash(i * 7.7) > k) continue;
+  const x = (hash(i) * W + now * (10 + hash(i + 5) * 24)) % (W + 20) - 10, y = lerp(y0, y1, hash(i + 31)) + Math.sin(now * .7 + i) * 9;
+  c.globalAlpha = .18 + hash(i + 3) * .5; c.fillStyle = DUST; c.beginPath(); c.arc(x, y, 1.2 + hash(i + 11) * 3.4, 0, 6.2832); c.fill() } c.globalAlpha = 1 }
+function haze(k, y0 = 280) { alpha(k, () => { c.fillStyle = grad(0, y0, 0, H, [[0, 'rgba(201,163,107,0)'], [1, 'rgba(201,163,107,.5)']]); c.fillRect(0, y0, W, H - y0) }) }
+// 세 겹으로 천천히 흐르는 도시 윤곽
+function skyline(now, clear = 1) { const per = 1500;
+  for (let l = 0; l < 3; l++) { const off = (now * (4 + l * 5)) % per, col = mix(mix('#2a2519', '#1b2740', clear), mix('#0f0d09', '#080c15', clear), l / 2);
+    c.fillStyle = col; for (let rep = 0; rep < 2; rep++) { let x = -off + rep * per, i = 0;
+      while (x < -off + rep * per + per) { const w = 38 + hash(i * 3.1 + l * 17) * 70, h = (40 + hash(i * 1.7 + l * 9) * 120) * (1 - l * .22) + (2 - l) * 26; if (x + w > 0 && x < W) c.fillRect(x, H - h, w + 1, h); x += w; i++ } } } }
+
+// 글자: 줄 단위로 아래에서 올라오며 드러남
+function reveal(s, x, y, size, t0, u, o = {}) { const k = eout((u - t0) / .55); if (k <= 0) return 0; const wt = o.weight || 700, w = tw(s, size, wt), X = o.al === 'right' ? x - w : o.al === 'center' ? x - w / 2 : x;
+  c.save(); c.beginPath(); c.rect(X - 6, y - size * 1.02, w + 12, size * 1.32); c.clip(); txt(s, X, y + (1 - k) * size * 1.1, size, o.col || PAPER, 'left', wt); c.restore(); return w }
+function rule(x, y, w, k, col = HAIR, lw = 1) { if (k > 0) line(x, y, x + w * eout(k), y, col, lw, 'butt') }
+// 예보 등급 눈금. 값 → x 좌표 함수를 돌려준다
+function scale(x, y, w, k = 1) { let p = 0; AQ.forEach(([n, to, col], i) => { const x0 = x + w * p / 100 + (i ? 2 : 0), x1 = x + w * to / 100;
+  alpha(k, () => { box(x0, y, x1 - x0, 8, col, 2); txt(n, x0, y + 32, 15, SUB, 'left', 500); mono(String(i ? p + 1 : 0), x0, y - 10, 12, MUTE, 'left', 500) }); p = to });
+  return v => x + w * clamp(v, 0, 100) / 100 }
+function marker(x, y, col, fill = true) { c.beginPath(); c.moveTo(x, y - 4); c.lineTo(x - 9, y - 20); c.lineTo(x + 9, y - 20); c.closePath(); if (fill) { c.fillStyle = col; c.fill() } else { c.strokeStyle = col; c.lineWidth = 2; c.stroke() } }
+function puff(x, y, now, a, n = 7) { for (let i = 0; i < n; i++) { const ph = (now * .35 + i / n) % 1; c.globalAlpha = a * .7 * (1 - ph); c.fillStyle = DUST; c.beginPath(); c.arc(x + Math.sin(ph * 5 + i) * 8 + ph * 14, y - ph * 70, 3 + ph * 9, 0, 6.2832); c.fill() } c.globalAlpha = 1 }
+
+// 선으로 그린 그림 기호 (가운데 x,y 기준 약 120×90)
+const st = (col, lw = 2.5) => { c.strokeStyle = col; c.lineWidth = lw; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke() };
+const ico = {
+  plant(x, y, col = PAPER) { c.beginPath(); c.moveTo(x - 52, y + 40); c.quadraticCurveTo(x - 36, y, x - 44, y - 30); c.lineTo(x - 4, y - 30); c.quadraticCurveTo(x - 12, y, x + 4, y + 40); c.closePath(); st(col);
+    c.beginPath(); c.rect(x + 22, y - 44, 16, 84); st(col); line(x - 60, y + 40, x + 56, y + 40, col, 2.5); line(x + 22, y - 30, x + 38, y - 30, col, 2.5) },
+  truck(x, y, col = PAPER) { c.beginPath(); c.roundRect(x - 56, y - 26, 68, 50, 4); st(col); c.beginPath(); c.moveTo(x + 12, y - 10); c.lineTo(x + 36, y - 10); c.lineTo(x + 54, y + 8); c.lineTo(x + 54, y + 24); c.lineTo(x + 12, y + 24); c.closePath(); st(col);
+    for (const wx of [x - 34, x + 32]) { c.beginPath(); c.arc(wx, y + 30, 11, 0, 6.2832); c.fillStyle = INK; c.fill(); st(col) } },
+  factory(x, y, col = PAPER) { c.beginPath(); c.moveTo(x - 56, y + 40); c.lineTo(x - 56, y - 6); c.lineTo(x - 24, y - 26); c.lineTo(x - 24, y - 6); c.lineTo(x + 8, y - 26); c.lineTo(x + 8, y - 6); c.lineTo(x + 30, y - 6); c.lineTo(x + 30, y - 44); c.lineTo(x + 46, y - 44); c.lineTo(x + 46, y + 40); c.closePath(); st(col);
+    for (const wx of [x - 40, x - 14, x + 12]) { c.beginPath(); c.rect(wx, y + 10, 12, 12); st(col, 2) } },
+  flame(x, y, col = PAPER) { c.beginPath(); c.moveTo(x, y - 44); c.bezierCurveTo(x + 34, y - 14, x + 36, y + 18, x + 14, y + 36); c.bezierCurveTo(x + 20, y + 16, x + 8, y + 6, x, y - 6); c.bezierCurveTo(x - 6, y + 10, x - 18, y + 14, x - 14, y + 36); c.bezierCurveTo(x - 38, y + 16, x - 30, y - 14, x, y - 44); c.closePath(); st(col);
+    line(x - 44, y + 40, x + 44, y + 40, col, 2.5) },
+};
+
+// 엔진 머리글·전환·후처리 대신 쓰는 것 (u는 실제 초)
+function header(i, u) { const D = window.STORY, n = D.names.length;
+  txt([D.org, D.department].filter(Boolean).join('  ·  '), 48, 56, 15, SUB, 'left', 500); mono(`${pad(i + 1)} / ${pad(n)}`, W - 48, 56, 14, MUTE, 'right', 500);
+  alpha(eout((u - .15) / .5), () => { mono(pad(i + 1), 48, 104, 16, SKY, 'left', 600); txt(D.names[i], 82, 105, 23, PAPER, 'left', 700) });
+  line(48, 124, W - 48, 124, HAIR, 1, 'butt'); line(48, 124, 48 + (W - 96) * clamp(u / D.sceneSec), 124, SKY, 2, 'butt') }
+function wipe(i, u) { if (u > .55) return; const e = eio(u / .55); c.fillStyle = '#0d1422'; c.fillRect(W * e, 0, W * (1 - e) + 1, H); c.fillStyle = SKY; c.fillRect(W * e - 10, 0, 10, H) }
+function post() { const D = window.STORY; // 화면 아래 자막 (소리 없이도 내용이 전달되게). 좁은 화면에서는 글자가 너무 작아져 페이지 쪽 자막을 쓴다
+  if (c.canvas.clientWidth && c.canvas.clientWidth < 600) return;
+  c.fillStyle = grad(0, 590, 0, H, [[0, 'rgba(6,9,16,0)'], [.35, 'rgba(6,9,16,.86)'], [1, 'rgba(6,9,16,.96)']]); c.fillRect(0, 590, W, H - 590);
+  const s = D.captions[curScene] || '', k = eout((curU - .25) / .5); if (!s || k <= 0) return;
+  const size = 23, max = W - 140, words = s.split(' '), rows = ['']; c.font = `500 ${size}px "IBM Plex Sans KR","Malgun Gothic",sans-serif`;
+  for (const w of words) { const t = rows[rows.length - 1] ? rows[rows.length - 1] + ' ' + w : w; if (c.measureText(t).width > max && rows[rows.length - 1]) rows.push(w); else rows[rows.length - 1] = t }
+  alpha(k, () => rows.forEach((r, j) => txt(r, W / 2, 668 - (rows.length - 1) * 16 + j * 32 + (1 - k) * 8, size, PAPER, 'center', 500))) }
+let curScene = 0, curU = 0;
+const header0 = header; header = function (i, u) { curScene = i; curU = u; header0(i, u) };
+
+// ---- 화려한 연출용 ----
+// 효과음 신호: 장면 시간 u가 t0을 지나는 순간 한 번 울린다
+const seen = {};
+function cue(u, t0, name) { const key = t0 + name, p = seen[key]; seen[key] = u; if (p !== undefined && p < t0 && u >= t0 && u - p < .5 && window.PM_SND) window.PM_SND.sfx(name) }
+// 천천히 다가가는 카메라
+function cam(u, fn, z = .05, ox = W / 2, oy = H / 2) { const s = 1 + z * clamp(u / 4); c.save(); c.translate(ox, oy); c.scale(s, s); c.translate(-ox, -oy); fn(); c.restore() }
+// 글자가 하나씩 튀어 오르며 강조색에서 본색으로
+function chars(s, x, y, size, t0, u, o = {}) { const wt = o.weight || 700, gap = o.gap ?? .04; c.font = `${wt} ${size}px "IBM Plex Sans KR","Malgun Gothic",sans-serif`; c.textAlign = 'left';
+  const total = c.measureText(s).width; let cx = o.al === 'center' ? x - total / 2 : o.al === 'right' ? x - total : x;
+  for (let i = 0; i < s.length; i++) { const w = c.measureText(s[i]).width, k = eout((u - t0 - i * gap) / .5); if (k > 0) { c.globalAlpha = clamp(k * 1.6); c.fillStyle = k < .75 ? SKY : (o.col || PAPER); c.fillText(s[i], cx, y + (1 - k) * size * .6) } cx += w }
+  c.globalAlpha = 1; return total }
+// 사방으로 터지는 선
+function burst(x, y, k, col = SKY, n = 16, r0 = 20, r1 = 120) { if (k <= 0 || k >= 1) return; const e = eout(k); c.globalAlpha = 1 - k; for (let i = 0; i < n; i++) { const a = i / n * 6.2832 + hash(i) * .3, l = 14 + hash(i + 9) * 26, r = lerp(r0, r1, e) * (.8 + hash(i + 3) * .4);
+  line(x + Math.cos(a) * r, y + Math.sin(a) * r, x + Math.cos(a) * (r + l * (1 - k)), y + Math.sin(a) * (r + l * (1 - k)), col, 2.5) } c.globalAlpha = 1 }
+function ring(x, y, k, col = SKY, r0 = 10, r1 = 160, lw = 2) { if (k <= 0 || k >= 1) return; c.globalAlpha = 1 - k; circ(x, y, lerp(r0, r1, eout(k)), null, col, lw); c.globalAlpha = 1 }
+// 바람 줄기 (오른쪽으로 흐름)
+function streaks(now, a, y0, y1, col = DUST, n = 22) { for (let i = 0; i < n; i++) { const sp = 260 + hash(i + 2) * 320, x = (hash(i) * (W + 400) + now * sp) % (W + 400) - 200, y = lerp(y0, y1, hash(i + 13)), l = 60 + hash(i + 5) * 160;
+  c.globalAlpha = a * (.15 + hash(i + 7) * .4); line(x - l, y, x, y, col, 1.5 + hash(i + 1) * 1.5) } c.globalAlpha = 1 }
+// 비스듬히 지나가는 빛줄기
+function sweep(k, col = '238,241,244') { if (k <= 0 || k >= 1) return; const x = lerp(-300, W + 300, eio(k)); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = grad(x - 160, 0, x + 160, 0, [[0, `rgba(${col},0)`], [.5, `rgba(${col},.16)`], [1, `rgba(${col},0)`]]);
+  c.beginPath(); c.moveTo(x - 60, 0); c.lineTo(x + 260, 0); c.lineTo(x + 60, H); c.lineTo(x - 260, H); c.closePath(); c.fill(); c.restore() }
+// 맑은 하늘로 올라가는 빛 알갱이
+function sparks(now, a, n = 40, col = SKY) { for (let i = 0; i < n; i++) { const ph = (now * (.08 + hash(i + 4) * .1) + hash(i)) % 1; c.globalAlpha = a * (1 - ph) * .8; c.fillStyle = col; c.beginPath(); c.arc(hash(i + 8) * W + Math.sin(ph * 6 + i) * 20, 620 - ph * 480, 1.4 + hash(i + 2) * 2.2, 0, 6.2832); c.fill() } c.globalAlpha = 1 }
+
+// ---- 그림 기호 추가 (모두 가운데 기준, 선 굵기 2.5) ----
+const ln = (x1, y1, x2, y2, col) => line(x1, y1, x2, y2, col, 2.5);
+const path = (col, fn) => { c.beginPath(); fn(); st(col) };
+Object.assign(ico, {
+  car(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 56, y + 20); c.lineTo(x - 56, y + 2); c.quadraticCurveTo(x - 54, y - 6, x - 44, y - 6); c.lineTo(x - 30, y - 6); c.lineTo(x - 14, y - 28); c.lineTo(x + 18, y - 28); c.lineTo(x + 34, y - 6); c.lineTo(x + 50, y - 2); c.quadraticCurveTo(x + 58, y, x + 58, y + 10); c.lineTo(x + 58, y + 20); c.closePath() });
+    for (const wx of [x - 30, x + 32]) { c.beginPath(); c.arc(wx, y + 22, 10, 0, 6.2832); c.fillStyle = INK; c.fill(); st(col) } },
+  mask(x, y, col = PAPER) { path(col, () => c.roundRect(x - 40, y - 24, 80, 48, 14)); ln(x - 26, y - 8, x + 26, y - 8, col); ln(x - 26, y + 8, x + 26, y + 8, col);
+    path(col, () => c.arc(x - 40, y, 16, Math.PI * .5, Math.PI * 1.5)); path(col, () => c.arc(x + 40, y, 16, -Math.PI * .5, Math.PI * .5)) },
+  drop(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 40); c.bezierCurveTo(x + 32, y - 2, x + 30, y + 36, x, y + 36); c.bezierCurveTo(x - 30, y + 36, x - 32, y - 2, x, y - 40) }) },
+  apple(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 18); c.bezierCurveTo(x + 42, y - 40, x + 50, y + 30, x + 10, y + 38); c.quadraticCurveTo(x, y + 32, x - 10, y + 38); c.bezierCurveTo(x - 50, y + 30, x - 42, y - 40, x, y - 18) }); ln(x, y - 18, x + 8, y - 38, col) },
+  cup(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 28, y - 38); c.lineTo(x - 20, y + 38); c.lineTo(x + 20, y + 38); c.lineTo(x + 28, y - 38); c.closePath() }) },
+  window(x, y, col = PAPER) { path(col, () => c.rect(x - 44, y - 40, 88, 80)); ln(x, y - 40, x, y + 40, col); ln(x - 44, y, x + 44, y, col) },
+  house(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 52, y - 4); c.lineTo(x, y - 44); c.lineTo(x + 52, y - 4) }); path(col, () => c.rect(x - 38, y - 4, 76, 44)); path(col, () => c.rect(x - 10, y + 12, 20, 28)) },
+  shield(x, y, col = PAPER) { path(col, () => { c.moveTo(x, y - 42); c.lineTo(x + 36, y - 28); c.lineTo(x + 36, y + 2); c.quadraticCurveTo(x + 34, y + 28, x, y + 42); c.quadraticCurveTo(x - 34, y + 28, x - 36, y + 2); c.lineTo(x - 36, y - 28); c.closePath() }) },
+  siren(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 26, y + 26); c.lineTo(x - 26, y - 4); c.arc(x, y - 4, 26, Math.PI, 0); c.lineTo(x + 26, y + 26) }); path(col, () => c.rect(x - 38, y + 26, 76, 14));
+    ln(x, y - 42, x, y - 54, col); ln(x - 36, y - 30, x - 46, y - 40, col); ln(x + 36, y - 30, x + 46, y - 40, col) },
+  crane(x, y, col = PAPER) { ln(x - 20, y + 40, x - 20, y - 46, col); ln(x - 50, y - 34, x + 52, y - 34, col); ln(x - 20, y - 46, x + 52, y - 34, col); ln(x - 20, y - 46, x - 50, y - 34, col); ln(x + 34, y - 34, x + 34, y - 6, col); path(col, () => c.rect(x + 24, y - 6, 20, 16)); ln(x - 44, y + 40, x + 4, y + 40, col) },
+  school(x, y, col = PAPER) { path(col, () => c.rect(x - 50, y - 12, 100, 52)); path(col, () => { c.moveTo(x - 24, y - 12); c.lineTo(x, y - 32); c.lineTo(x + 24, y - 12) }); ln(x, y - 32, x, y - 50, col); path(col, () => { c.moveTo(x, y - 50); c.lineTo(x + 16, y - 45); c.lineTo(x, y - 40) }); path(col, () => c.rect(x - 9, y + 16, 18, 24)) },
+  phone(x, y, col = PAPER) { path(col, () => c.roundRect(x - 28, y - 48, 56, 96, 9)); ln(x - 7, y + 40, x + 7, y + 40, col) },
+  filter(x, y, col = PAPER) { path(col, () => c.roundRect(x - 40, y - 20, 80, 40, 16)); ln(x - 60, y, x - 40, y, col); ln(x + 40, y, x + 60, y, col); for (let j = -1; j <= 1; j++) ln(x + j * 18, y - 20, x + j * 18, y + 20, col) },
+  lungs(x, y, col = PAPER) { ln(x, y - 48, x, y - 14, col); for (const d of [-1, 1]) { path(col, () => { c.moveTo(x, y - 14); c.quadraticCurveTo(x + d * 10, y - 10, x + d * 14, y) });
+    path(col, () => { c.moveTo(x + d * 10, y - 24); c.bezierCurveTo(x + d * 50, y - 22, x + d * 58, y + 28, x + d * 46, y + 42); c.bezierCurveTo(x + d * 30, y + 46, x + d * 10, y + 34, x + d * 10, y + 8); c.closePath() }) } },
+});
+// 그림 기호를 크게·뒤집어 그리기
+function icon(name, x, y, s = 1, col = PAPER, flip = false) { c.save(); c.translate(x, y); c.scale(flip ? -s : s, s); ico[name](0, 0, col); c.restore() }
+// 번호가 붙은 목록: 한 줄씩 차례로 등장
+function rows(list, x, y, dy, t0, u, o = {}) { const size = o.size || 30, step = o.step ?? .3; list.forEach((s, i) => { const t = t0 + i * step, yy = y + i * dy; cue(u, t, 'pop');
+  alpha(eout((u - t) / .3), () => mono(pad(i + 1), x, yy - 3, 15, o.ic || SKY, 'left', 600)); chars(s, x + 44, yy, size, t, u, {gap: .02, weight: o.weight || 700, col: o.col}); rule(x, yy + (o.rg ?? 24), o.w || 560, (u - t - .1) / .5) }) }
+// 작은 설명 + 큰 두 줄 제목
+function title(sub, l1, l2, u, o = {}) { const x = o.x ?? 64, sz = o.size || 84, t = o.t0 ?? .3; chars(sub, x, 226, 34, t, u, {col: SUB, weight: 500}); chars(l1, x, 226 + sz + 12, sz, t + .25, u); if (l2) chars(l2, x, 226 + sz * 2 + 26, sz, t + .6, u, {col: o.col2 || SKY}) }
+// 테두리 꼬리표
+function tag(s, x, y, col = SKY, size = 20) { const w = tw(s, size, 700) + 28; box(x, y - size - 8, w, size + 20, 'rgba(10,15,26,.8)', 8, col, 1.5); txt(s, x + 14, y + 2, size, col, 'left', 700); return w }
+// 아래쪽 도로
+function road(now, speed = 120, y = 572) { line(0, y, W, y, HAIR, 1, 'butt'); for (let i = 0; i < 14; i++) { const x = ((i * 100 - now * speed) % 1400 + 1400) % 1400 - 100; line(x, y + 12, x + 44, y + 12, 'rgba(238,241,244,.16)', 2, 'butt') } }
+
+Object.assign(ico, {
+  drone(x, y, col = PAPER) { path(col, () => c.roundRect(x - 16, y - 6, 32, 16, 5)); ln(x - 16, y - 2, x - 44, y - 12, col); ln(x + 16, y - 2, x + 44, y - 12, col); ln(x - 62, y - 14, x - 26, y - 14, col); ln(x + 26, y - 14, x + 62, y - 14, col);
+    ln(x - 10, y + 10, x - 16, y + 22, col); ln(x + 10, y + 10, x + 16, y + 22, col); path(col, () => c.arc(x, y + 14, 4, 0, 6.2832)) },
+  bus(x, y, col = PAPER) { path(col, () => c.roundRect(x - 58, y - 32, 116, 56, 8)); for (let j = 0; j < 4; j++) path(col, () => c.rect(x - 48 + j * 25, y - 22, 18, 18)); ln(x - 58, y + 6, x + 58, y + 6, col);
+    for (const wx of [x - 32, x + 32]) { c.beginPath(); c.arc(wx, y + 26, 9, 0, 6.2832); c.fillStyle = INK; c.fill(); st(col) } },
+  thermo(x, y, col = PAPER) { path(col, () => { c.moveTo(x - 9, y + 12); c.lineTo(x - 9, y - 36); c.arc(x, y - 36, 9, Math.PI, 0); c.lineTo(x + 9, y + 12); c.arc(x, y + 26, 17, -1, Math.PI + 1) }); ln(x, y + 26, x, y - 14, col); for (let j = 0; j < 3; j++) ln(x + 18, y - 30 + j * 14, x + 28, y - 30 + j * 14, col) },
+  clip(x, y, col = PAPER) { path(col, () => c.roundRect(x - 34, y - 38, 68, 82, 6)); path(col, () => c.rect(x - 14, y - 46, 28, 14)); for (let j = 0; j < 3; j++) ln(x - 20, y - 12 + j * 18, x + 20, y - 12 + j * 18, col) },
+  bolt(x, y, col = PAPER) { path(col, () => { c.moveTo(x + 6, y - 32); c.lineTo(x - 16, y + 4); c.lineTo(x - 1, y + 4); c.lineTo(x - 7, y + 32); c.lineTo(x + 16, y - 6); c.lineTo(x + 1, y - 6); c.closePath() }) },
+});
+// 한 장면 = 큰 번호 + 제목 + 설명 줄(왼쪽) + 그림(오른쪽 art). clear: 하늘이 맑은 정도 0~1
+const tip = (num, ttl, list, clear, art) => (u, T, now) => {
+  bg(clear); stars(now, clear); dust(now, (1 - clear) * .85 + .05, 140, 590); haze((1 - clear) * .7, 280);
+  cue(u, .2, 'low'); alpha(eout((u - .2) / .4), () => mono(num, 58, 300, 150, SKY, 'left', 700));
+  chars(ttl, 64, 392, 54, .5, u);
+  const n = list.length; rows(list, 64, n > 3 ? 448 : 460, n > 3 ? 40 : 46, 1.2, u, {size: n > 3 ? 21 : 23, w: 600, weight: 500, rg: 14, step: .28, ic: MUTE});
+  art(u, now);
+};
+
+CINE.K = {tip, icon, rows, title, tag, road, cue, cam, chars, burst, ring, streaks, sweep, sparks,INK, PAPER, SUB, MUTE, SKY, DUST, HAIR, AQ, pad, mix, bg, stars, dust, haze, skyline, reveal, rule, scale, marker, puff, ico, header, wipe, post};
+})();
+;// 첨단감시장비 활용 불법배출 감시 — AI 분석 → 이동측정차량 → 드론 → 현장 점검
+(() => {
+const {W, H, c, clamp, lerp, eio, eout, hash, box, line, circ, txt, mono, alpha, arrow, tick, K} = CINE;
+const {INK, PAPER, SUB, MUTE, SKY, DUST, HAIR} = K;
+
+CINE.story({header: K.header, wipe: K.wipe, post: K.post, scenes: [
+  // 1 산업단지 감시
+  (u, T, now) => {
+    const k = eio((u - .3) / 2); K.bg(1 - k * .55); K.stars(now, 1 - k); K.dust(now, .15 + k * .5, 140, 590); K.haze(k * .5, 300);
+    K.cue(u, .45, 'low'); K.title('사업장이 밀집한', '산업단지', '불법배출 감시', u);
+    [[760, 'factory', 1.5], [930, 'plant', 1.7], [1090, 'factory', 1.3]].forEach(([x, ic, s], i) => { const a = eout((u - .6 - i * .2) / .5); if (a <= 0) return;
+      alpha(a, () => { K.puff(x + (ic === 'plant' ? 30 : 38) * s, 500 - 46 * s, now + i * .4, .9, 9); K.icon(ic, x, 500, s, DUST) }) });
+    line(660, 500 + 62, 1160, 500 + 62, HAIR, 1, 'butt');
+    for (let j = 0; j < 2; j++) if (u > 2 + j * .5) K.ring(930, 440, ((u - 2 - j * .5) % 1.4) / 1.4, SKY, 120, 300, 2);
+    K.cue(u, 2, 'rise');
+  },
+  // 2 AI 분석 — 측정망 자료에서 점검할 지역을 고른다
+  (u, T, now) => {
+    K.bg(.8); K.stars(now, .5);
+    K.chars('도시대기측정망 자료 분석', 64, 226, 32, .3, u, {col: SUB, weight: 500}); K.chars('AI로', 64, 322, 84, .55, u); K.chars('점검 지역 선정', 64, 416, 72, .9, u, {col: SKY});
+    const a = eout((u - .5) / .5); if (a <= 0) return;
+    alpha(a, () => { box(680, 170, 456, 400, 'rgba(10,15,26,.82)', 16, HAIR, 1);
+      for (let i = 1; i < 6; i++) { line(680 + i * 76, 170, 680 + i * 76, 570, 'rgba(238,241,244,.06)', 1, 'butt'); if (i < 5) line(680, 170 + i * 80, 1136, 170 + i * 80, 'rgba(238,241,244,.06)', 1, 'butt') }
+      const hot = eout((u - 2) / .5);
+      for (let i = 0; i < 14; i++) { const x = 716 + hash(i * 3.3) * 384, y = 204 + hash(i * 5.1 + 2) * 330, near = Math.hypot(x - 946, y - 370) < 90, t = .9 + i * .07, k = eout((u - t) / .3); if (k <= 0) continue;
+        circ(x, y, 5 * k, near ? K.mix('#eef1f4', '#c9a36b', hot) : PAPER); K.ring(x, y, ((now * .6 + hash(i)) % 1), near && hot > .5 ? DUST : SKY, 5, 22, 1.5) }
+      K.cue(u, .9, 'tick'); K.cue(u, 2, 'chime');
+      if (hot > 0) { alpha(hot, () => { box(870, 290, 152, 160, 'rgba(201,163,107,.12)', 10, DUST, 2); K.tag('점검 대상 지역', 870, 276, DUST, 17) }); K.ring(946, 370, (u - 2) / .8, DUST, 60, 180) } });
+  },
+  // 3 이동측정차량 — 달리면서 실시간 측정, 고농도 구간을 찾는다
+  (u, T, now) => {
+    K.bg(.7); K.dust(now, .3, 140, 560); K.road(now, 200);
+    K.chars('산업단지를 주행하며 실시간 측정', 64, 226, 32, .3, u, {col: SUB, weight: 500}); K.chars('이동측정차량', 64, 322, 80, .55, u);
+    const vx = lerp(-200, 330, eout((u - .2) / 1.4)); K.icon('truck', vx, 494, 2, PAPER); line(vx - 70, 442, vx - 70, 396, PAPER, 2.5); line(vx - 84, 396, vx - 56, 396, PAPER, 2.5);
+    for (let j = 0; j < 2; j++) K.ring(vx - 70, 392, ((now * .8 + j * .5) % 1), SKY, 6, 46, 2);
+    const a = eout((u - .8) / .5), p = clamp((u - 1) / 1.8); if (a <= 0) return;
+    alpha(a, () => { box(680, 170, 456, 290, 'rgba(10,15,26,.82)', 16, HAIR, 1); txt('실시간 농도', 704, 208, 17, SUB, 'left', 500);
+      for (let i = 1; i < 4; i++) line(704, 220 + i * 52, 1112, 220 + i * 52, 'rgba(238,241,244,.06)', 1, 'butt');
+      const f = q => .14 + .04 * Math.sin(q * 38) + .03 * Math.sin(q * 91) + .7 * Math.exp(-Math.pow((q - .68) / .07, 2)), N = 120;
+      c.beginPath(); for (let i = 0; i <= N * p; i++) { const q = i / N, x = 704 + 408 * q, y = 430 - 190 * f(q); i ? c.lineTo(x, y) : c.moveTo(x, y) } c.strokeStyle = SKY; c.lineWidth = 3; c.lineJoin = 'round'; c.stroke();
+      const hx = 704 + 408 * Math.min(p, 1), hy = 430 - 190 * f(Math.min(p, 1)); circ(hx, hy, 5, PAPER);
+      if (p > .68) { const k = eout((u - 2.25) / .4); K.cue(u, 2.25, 'chime'); alpha(k, () => { circ(704 + 408 * .68, 430 - 190 * f(.68), 9, null, DUST, 2.5); K.tag('고농도 구간', 704 + 408 * .68 - 150, 262, DUST, 17) }); K.ring(704 + 408 * .68, 430 - 190 * f(.68), (u - 2.25) / .7, DUST, 10, 90) } });
+    K.cue(u, 1, 'rise');
+  },
+  // 4 드론 — 사업장 상공에서 측정
+  (u, T, now) => {
+    K.bg(.62); K.dust(now, .3, 140, 590);
+    K.chars('이동측정차량과 함께', 64, 226, 32, .3, u, {col: SUB, weight: 500}); K.chars('드론으로', 64, 322, 84, .55, u); K.chars('상공에서 측정', 64, 416, 72, .9, u, {col: SKY});
+    alpha(eout((u - .5) / .5), () => { K.puff(952, 372, now, .9, 10); K.icon('plant', 900, 480, 1.9, DUST); line(700, 556, 1140, 556, HAIR, 1, 'butt') });
+    const dx = lerp(1260, 950, eout((u - .8) / 1.3)) + Math.sin(now * 1.3) * 10, dy = 232 + Math.sin(now * 2) * 7; K.cue(u, .8, 'rise');
+    if (u > 1.9) alpha(.4 + .25 * Math.sin(now * 7), () => { c.beginPath(); c.moveTo(dx, dy + 30); c.lineTo(dx - 70, 380); c.lineTo(dx + 70, 380); c.closePath(); c.fillStyle = 'rgba(108,196,255,.2)'; c.fill() });
+    K.icon('drone', dx, dy, 1.9, PAPER); K.cue(u, 2.1, 'chime'); K.ring(dx, 360, (u - 2.1) / .8, SKY, 20, 130);
+  },
+  // 5 현장 점검 — 선별 → 점검 → 개선
+  (u, T, now) => {
+    K.bg(.96); K.stars(now, .8); K.sparks(now, .5);
+    K.chars('측정 결과는 현장 점검으로 이어집니다', 64, 204, 32, .2, u, {col: SUB, weight: 500});
+    [['factory', '의심 사업장 선별', DUST], ['clip', '점검반 현장 점검', PAPER], ['shield', '개선 조치', SKY]].forEach(([ic, s, col], i) => { const x = 64 + i * 368, t = .6 + i * .5, a = eout((u - t) / .5); K.cue(u, t, 'pop'); if (a <= 0) return;
+      alpha(a, () => { c.save(); c.translate(0, (1 - a) * 32); box(x, 244, 336, 300, 'rgba(17,20,29,.72)', 14, HAIR, 1); mono(K.pad(i + 1), x + 24, 284, 16, SKY, 'left', 600);
+        K.icon(ic, x + 168, 372, 1.5, col); if (i === 0) K.ring(x + 168, 372, ((now * .7) % 1), DUST, 40, 110, 2); if (i === 2) tick(x + 168, 374, (u - t - .5) / .4, SKY, 1.5);
+        txt(s, x + 168, 492, 26, PAPER, 'center', 700); c.restore() });
+      if (i < 2) alpha(eout((u - t - .35) / .3), () => arrow(x + 344, 394, x + 360, 394, SKY, 3, 10, 1)) });
+    K.cue(u, 2.6, 'chime'); K.sweep((u - 2.6) / 1.1);
+  }
+]});
+})();
+</script>
+</body></html>
